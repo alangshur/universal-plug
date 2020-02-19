@@ -7,7 +7,7 @@ class AuctionPage extends Component {
                 Auction Page
             </div>
         );
-    }   
+    }
 }
 
 export default AuctionPage;
