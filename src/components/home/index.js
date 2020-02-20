@@ -102,11 +102,14 @@ class HomePage extends Component {
                         {/* profile text */}
                         <div
                             style={{
-                                marginTop: '5%',
-                                padding: '40px',
+                                marginTop: '15%',
+                                marginLeft: '50px',
+                                marginRight: '50px',
+                                marginBottom: '5%',
 
+                                overflow: 'scroll',
                                 textAlign: 'center',
-                                fontSize: '15px',
+                                fontSize: '13px',
                                 color: '#36454F',
                                 lineHeight: '20px',
                                 userSelect: 'none',
