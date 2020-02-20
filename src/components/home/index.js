@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-// temporary test image
-import TestImage from '../assets/test.png'; 
+import TestImage from '../../assets/test.png';
+import BackgroundImage from '../../assets/background.png';
 
 class HomePage extends Component {
     render() {
         return (
 
-            <div 
+            <div
                 draggable={false}
                 style={{
                     position: 'absolute',
@@ -22,10 +22,14 @@ class HomePage extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
 
-                    backgroundColor: 'white'
+                    backgroundImage: `url(${BackgroundImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+                    fontFamily: 'Arial, Helvetica, sans-serif'
                 }}
             >
-                
+
                 {/* profile container */}
                 <div
                     id='profile'
@@ -37,46 +41,24 @@ class HomePage extends Component {
                         width: '40%',
 
                         justifyContent: 'center',
-                        alignItems: 'center',
+                        alignItems: 'center'
                     }}
                 >
 
                     {/* profile image */}
-                    <img 
+                    <img
                         id='profile-image'
-                        src={TestImage} 
-                        alt='Test Image' 
+                        src={TestImage}
+                        alt='Test Image'
                         draggable={false}
+                        onLoad={this.onImgLoad}
+
                         style={{
-                            width: '100%'
+                            width: '100%',
+                            borderRadius: '10px',
+                            objectFit: 'cover'
                         }}
                     />
-
-                    {/* profile title */}
-                    <div
-                        id='profile-title'
-                        style={{
-                            position: 'absolute',
-                            display: 'flex',
-                            zIndex: 1,
-
-                            height: '12%',
-                            width: '50%',
-
-                            left: '93%',
-                            top: '6%',
-
-                            justifyContent: 'center',
-                            alignItems: 'center',
-
-                            borderColor: 'black',
-                            borderWidth: '1px',
-                            borderStyle: 'solid',
-                            backgroundColor: 'white',
-                        }}
-                    >
-                        Test profile title
-                    </div>
 
                     {/* profile text */}
                     <div
@@ -86,11 +68,12 @@ class HomePage extends Component {
                             display: 'flex',
                             zIndex: 1,
 
-                            height: '40%',
-                            width: '60%',
+                            width: '30%',
 
-                            left: '45%',
-                            top: '93%',
+                            right: '105%',
+                            top: '65%',
+
+                            padding: '15px',
 
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -98,9 +81,28 @@ class HomePage extends Component {
                             borderColor: 'black',
                             borderWidth: '1px',
                             borderStyle: 'solid',
-                            backgroundColor: 'white',
+                            borderRadius: '4px',
+
+                            backgroundColor: '#f6f6f6',
+                            fontSize: '0.9vw'
                         }}
                     >
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
+                        Test profile text
                         Test profile text
                     </div>
 
@@ -112,11 +114,12 @@ class HomePage extends Component {
                             display: 'flex',
                             zIndex: 1,
 
-                            height: '40%',
                             width: '30%',
 
-                            right: '93%',
-                            top: '55%',
+                            left: '105%',
+                            top: '5%',
+
+                            padding: '15px',
 
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -124,9 +127,19 @@ class HomePage extends Component {
                             borderColor: 'black',
                             borderWidth: '1px',
                             borderStyle: 'solid',
-                            backgroundColor: 'white',
+                            borderRadius: '4px',
+
+                            backgroundColor: '#f6f6f6',
+                            fontSize: '0.9vw'
                         }}
                     >
+                        Test profile links
+                        Test profile links
+                        Test profile links
+                        Test profile links
+                        Test profile links
+                        Test profile links
+                        Test profile links
                         Test profile links
                     </div>
                 </div>
