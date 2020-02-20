@@ -51,7 +51,8 @@ class HomePage extends Component {
 
                             backgroundImage: 'linear-gradient(#ffcccb, white)',
                             borderRadius: '60px',
-                            boxShadow: '0 0 10px lightgrey'
+                            boxShadow: '0 0 10px lightgrey',
+                            
                         }}
                     >
 
@@ -61,11 +62,17 @@ class HomePage extends Component {
                             draggable={false}
                             style={{
                                 marginTop: '13%',
-                                height: '275px',
-                                width: '275x',
+                                height: '225px',
+                                width: '225x',
 
                                 borderRadius: '10px',
                                 boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+
+                                userSelect: 'none',
+                                msUserSelect: 'none',
+                                KhtmlUserSelect: 'none',
+                                MozUserSelect: 'none'
                             }}
                         />
 
@@ -105,7 +112,7 @@ class HomePage extends Component {
                                 marginTop: '15%',
                                 marginLeft: '50px',
                                 marginRight: '50px',
-                                marginBottom: '5%',
+                                marginBottom: '8%',
 
                                 overflow: 'scroll',
                                 textAlign: 'center',
