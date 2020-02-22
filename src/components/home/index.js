@@ -1,55 +1,67 @@
 import React, { Component } from 'react';
-import { Row } from 'react-bootstrap';
-import ReactPlayer from 'react-player';
 
 import TestImage from '../../assets/test.png';
 import BackgroundImage from '../../assets/background.png';
 import PlayIcon from '../../assets/play.png';
 
 import MediaLink from './media';
+import HomePlayer from './player';
 
 class HomePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            playerOpen: false
+        };
+    }
 
     _goToAuction = () => {
         this.props.history.push('/auction');
     }
 
-
-    // SOLUTION: USE STREAMBLE WITH REACT-PLAYER
-    // render() {
-    //     return (
-    //         <ReactPlayer url='https://streamable.com/bwkxc' playing />
-    //     );
-    // }
+    togglePlayer = () => {
+        console.log('this')
+        this.setState({ playerOpen: !this.state.playerOpen });
+    }
 
     render() {
         return (
             <>
 
+                {/* home video player */} 
+                {this.state.playerOpen && 
+                    <HomePlayer 
+                        togglePlayer={this.togglePlayer} 
+                    />
+                }
+
                 {/* auction button */}
-                <div
-                    onClick={this._goToAuction}
-                    style={{
-                        position: 'absolute',
-                        zIndex: 1,
+                {!this.state.playerOpen && 
+                    <div
+                        onClick={this._goToAuction}
+                        style={{
+                            position: 'absolute',
+                            zIndex: 1,
 
-                        right: '30px',
-                        top: '20px',
+                            right: '30px',
+                            top: '20px',
 
-                        fontSize: '16px',
-                        fontFamily: 'Helvetica',
-                        fontWeight: 'bold',
-                        letterSpacing: '1px',
-                        cursor: 'pointer',
+                            fontSize: '16px',
+                            fontFamily: 'Helvetica',
+                            fontWeight: 'bold',
+                            letterSpacing: '1px',
+                            cursor: 'pointer',
 
-                        serSelect: 'none',
-                        msUserSelect: 'none',
-                        KhtmlUserSelect: 'none',
-                        MozUserSelect: 'none'
-                    }}
-                >
-                    [Auction]
-                </div>
+                            serSelect: 'none',
+                            msUserSelect: 'none',
+                            KhtmlUserSelect: 'none',
+                            MozUserSelect: 'none'
+                        }}
+                    >
+                        [Auction]
+                    </div>
+                }
 
                 {/* page canvas */}
                 <div
@@ -120,6 +132,7 @@ class HomePage extends Component {
                                     height: '350px',
                                     borderRadius: '25px',
                                     boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
                                     userSelect: 'none',
                                     msUserSelect: 'none',
                                     KhtmlUserSelect: 'none',
@@ -130,10 +143,17 @@ class HomePage extends Component {
                             <img
                                 src={PlayIcon}
                                 alt='Play ICN'
+                                draggable={false}
+                                onClick={this.togglePlayer}
                                 style={{
                                     position: 'absolute',
                                     height: '125px',
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
+
+                                    userSelect: 'none',
+                                    msUserSelect: 'none',
+                                    KhtmlUserSelect: 'none',
+                                    MozUserSelect: 'none'
                                 }}
                             />
                         </div>
@@ -141,7 +161,7 @@ class HomePage extends Component {
                         {/* profile title */}
                         <div
                             style={{
-                                marginTop: '25%',
+                                marginTop: '28%',
 
                                 fontSize: '30px',
                                 fontWeight: 'bold',
@@ -159,7 +179,7 @@ class HomePage extends Component {
                         <div
                             style={{
                                 display: 'flex',
-                                marginTop: '7%',
+                                marginTop: '5%',
                                 flexDirection: 'column'
                             }}
                         >
@@ -173,7 +193,7 @@ class HomePage extends Component {
                         {/* profile text */}
                         <div
                             style={{
-                                marginTop: '7%',
+                                marginTop: '5%',
                                 marginLeft: '52px',
                                 marginRight: '52px',
                                 marginBottom: '3%',
