@@ -21,11 +21,7 @@ class MediaLink extends Component {
         }
 
         return (
-            <Row
-                style={{
-                    cursor: 'pointer'
-                }}
-            >
+            <Row>
 
                 <img
                     src={icon}
@@ -34,22 +30,29 @@ class MediaLink extends Component {
                     style={{
                         height: '20px',
                         width: '20px',
+                        marginBottom: '10px',
+
                         opacity: '0.6',
-                        marginBottom: '10px'
                     }}
                 />
 
-                <div
+                <a
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    href='www.google.com'
                     style={{
                         marginLeft: '15px',
                         paddingBottom: '2px',
 
                         fontSize: '13px',
-                        fontStyle: 'oblique'
+                        fontStyle: 'oblique',
+                        color: 'black',
+                        opacity: '0.6',
+                        cursor: 'pointer'
                     }}
                 >
                     {this.props.text}
-                </div>
+                </a>
             </Row>
         );
     }

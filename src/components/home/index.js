@@ -4,6 +4,8 @@ import ReactPlayer from 'react-player';
 
 import TestImage from '../../assets/test.png';
 import BackgroundImage from '../../assets/background.png';
+import PlayIcon from '../../assets/play.png';
+
 import MediaLink from './media';
 
 class HomePage extends Component {
@@ -93,30 +95,55 @@ class HomePage extends Component {
                     >
 
                         {/* profile image */}
-                        <img
-                            src={TestImage}
-                            alt='Profile IMG'
-                            draggable={false}
+                        <div
                             style={{
-                                marginTop: '12%',
-                                height: '375px',
+                                display: 'flex',
+                                position: 'relative',
+                                marginTop: '14%',
+                                top: 0,
+                                left: 0,
 
-                                borderRadius: '10px',
-                                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-                                userSelect: 'none',
-                                msUserSelect: 'none',
-                                KhtmlUserSelect: 'none',
-                                MozUserSelect: 'none'
+                                justifyContent: 'center',
+                                alignItems: 'center'
                             }}
-                        />
+                        >
+
+                            <img
+                                src={TestImage}
+                                alt='Profile IMG'
+                                draggable={false}
+                                style={{
+                                    position: 'relative',
+                                    top: 0,
+                                    left: 0,
+
+                                    height: '350px',
+                                    borderRadius: '25px',
+                                    boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                                    userSelect: 'none',
+                                    msUserSelect: 'none',
+                                    KhtmlUserSelect: 'none',
+                                    MozUserSelect: 'none'
+                                }}
+                            />
+
+                            <img
+                                src={PlayIcon}
+                                alt='Play ICN'
+                                style={{
+                                    position: 'absolute',
+                                    height: '125px',
+                                    cursor: 'pointer'
+                                }}
+                            />
+                        </div>
 
                         {/* profile title */}
                         <div
                             style={{
-                                marginTop: '10%',
+                                marginTop: '25%',
 
-                                fontSize: '25px',
+                                fontSize: '30px',
                                 fontWeight: 'bold',
                                 letterSpacing: '2px',
                                 userSelect: 'none',
@@ -132,22 +159,24 @@ class HomePage extends Component {
                         <div
                             style={{
                                 display: 'flex',
-                                marginTop: '3%',
+                                marginTop: '7%',
                                 flexDirection: 'column'
                             }}
                         >
-                            
+
                             <MediaLink media='instagram' text='alangshur' />
+                            <MediaLink media='youtube' text='alexlangshur' />
+                            <MediaLink media='website' text='alexlangshur.com' />
 
                         </div>
 
                         {/* profile text */}
                         <div
                             style={{
-                                marginTop: '15%',
+                                marginTop: '7%',
                                 marginLeft: '52px',
                                 marginRight: '52px',
-                                marginBottom: '8%',
+                                marginBottom: '3%',
                                 fontStyle: 'italic',
 
                                 overflow: 'scroll',
