@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
+import Loader from 'react-loader-spinner';
 
 class HomePlayer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            playerReady: 'false'
+        }
     }
 
-    // SOLUTION: USE STREAMBLE WITH REACT-PLAYER
-    // render() {
-    //     return (
-    //         <ReactPlayer url='https://streamable.com/bwkxc' playing />
-    //     );
-    // }
+    _setPlayerReady = () => {
+        console.log('rerady!')
+        this.setState({
+            playerReady: true
+        });
+    }
 
     render() {
         return (
             <div
                 style={{
+                    display: 'flex',
                     position: 'absolute',
                     zIndex: 2,
+
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     
                     height: '100%',
                     width: '100%',
 
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                    backgroundColor: 'rgba(0, 0, 0, 0.65)'
                 }}
             >
 
@@ -32,7 +40,6 @@ class HomePlayer extends Component {
                     onClick={this.props.togglePlayer}
                     style={{
                         position: 'absolute',
-                        // zIndex: 3,
 
                         right: '30px',
                         top: '20px',
@@ -53,6 +60,25 @@ class HomePlayer extends Component {
                         [Back]
                 </div>
 
+                <ReactPlayer 
+                    url={this.props.link}
+                    onReady={this._setPlayerReady}
+                    style={{
+                        display: this.state.playerReady ? 'inline' : 'none',
+                        zIndex: 2,
+                    }}
+                />
+
+                <Loader 
+                    type='Oval' 
+                    color='lightgrey'
+                    height='150px'
+                    width='150px'
+                    style={{
+                        position: 'absolute',
+                        zIndex: 1
+                    }}
+                />
             </div>
         )
     }   

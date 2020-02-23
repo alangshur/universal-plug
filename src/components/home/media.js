@@ -39,7 +39,7 @@ class MediaLink extends Component {
                 <a
                     target="_blank" 
                     rel="noopener noreferrer"
-                    href='www.google.com'
+                    href={this.props.link}
                     style={{
                         marginLeft: '15px',
                         paddingBottom: '2px',

@@ -33,6 +33,7 @@ class HomePage extends Component {
                 {this.state.playerOpen && 
                     <HomePlayer 
                         togglePlayer={this.togglePlayer} 
+                        link='https://streamable.com/bwkxc'
                     />
                 }
 
@@ -161,7 +162,7 @@ class HomePage extends Component {
                         {/* profile title */}
                         <div
                             style={{
-                                marginTop: '28%',
+                                marginTop: '25%',
 
                                 fontSize: '30px',
                                 fontWeight: 'bold',
@@ -184,9 +185,9 @@ class HomePage extends Component {
                             }}
                         >
 
-                            <MediaLink media='instagram' text='alangshur' />
-                            <MediaLink media='youtube' text='alexlangshur' />
-                            <MediaLink media='website' text='alexlangshur.com' />
+                            <MediaLink media='instagram' text='alangshur' link='http://www.google.com' />
+                            <MediaLink media='youtube' text='alexlangshur' link='http://www.google.com' />
+                            <MediaLink media='website' text='alexlangshur.com' link='http://www.google.com' />
 
                         </div>
 
