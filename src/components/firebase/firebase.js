@@ -11,8 +11,8 @@ var config = {
     storageBucket: "universal-plug.appspot.com",
     messagingSenderId: "388342153426",
     appId: "1:388342153426:web:7db8a35b005af5eb096d0b",
-    measurementId: "G-HHJ0LR6WGH"
-}
+    measurementId: "G-6ECP04B4NK"
+};
 
 class Firebase {
     constructor() {
