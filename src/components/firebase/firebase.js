@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/analytics';
 
 var config = {
     apiKey: "AIzaSyDOTJ2VnZmsyuxHNLAd_-LtGjZCE8_xnhg",
@@ -19,6 +20,7 @@ class Firebase {
 
         this.auth = app.auth();
         this.db = app.database();
+        this.analytics = app.analytics();
 
         this.googleProvider = new app.auth.GoogleAuthProvider();
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import Loader from 'react-loader-spinner';
+import { Button } from 'react-bootstrap';
 
 class HomePlayer extends Component {
     constructor(props) {
@@ -11,7 +12,6 @@ class HomePlayer extends Component {
     }
 
     _setPlayerReady = () => {
-        console.log('rerady!')
         this.setState({
             playerReady: true
         });
@@ -36,29 +36,20 @@ class HomePlayer extends Component {
             >
 
                 {/* back button */}
-                <div
+                <Button
                     onClick={this.props.togglePlayer}
+                    variant='outline-light'
+                    size='sm'
                     style={{
                         position: 'absolute',
+                        zIndex: 1,
 
-                        right: '30px',
+                        right: '20px',
                         top: '20px',
-
-                        fontSize: '16px',
-                        fontFamily: 'Helvetica',
-                        fontWeight: 'bold',
-                        letterSpacing: '1px',
-                        cursor: 'pointer',
-                        color: 'lightgrey',
-
-                        userSelect: 'none',
-                        msUserSelect: 'none',
-                        KhtmlUserSelect: 'none',
-                        MozUserSelect: 'none'
                     }}
                 >
-                        [Back]
-                </div>
+                    Back
+                </Button>
 
                 <ReactPlayer 
                     url={this.props.link}

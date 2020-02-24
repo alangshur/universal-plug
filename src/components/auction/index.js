@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Navbar, Nav } from 'react-bootstrap';
 
 import { withFirebase } from '../firebase';
 import { withAuthUser } from '../session';
-import BackgroundImage from '../../assets/background.png';
 
 class AuctionPage extends Component {
     constructor(props) {
@@ -20,7 +20,6 @@ class AuctionPage extends Component {
         this.props.firebase
             .doSignIn()
             .then(user => {
-                console.log(user);
                 this.setState({ error: null });
             })
             .catch(error => {
@@ -46,6 +45,14 @@ class AuctionPage extends Component {
 
     _onPaymentSubmit = event => {
         event.preventDefault();
+
+        fetch('https://us-central1-universal-plug.cloudfunctions.net/helloWorld')
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log(myJson);
+            });
     }
 
     _onBuildProfile = event => {
@@ -56,140 +63,41 @@ class AuctionPage extends Component {
         return (
             <>
 
-                {/* page canvas */}
-                <div
-                    draggable={false}
-                    style={{
-                        position: 'absolute',
-                        display: 'flex',
+                {/* user navbar */}
+                <Navbar bg="light" expand="lg">
+                    <Navbar.Brand href="/auction">Auction</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
+                            <Nav.Link href="/">Home</Nav.Link>
 
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                            {this.props.user &&
+                                <>
+                                    <Nav.Link onClick={this._onPaymentSubmit}>Add Payment</Nav.Link>
+                                    <Nav.Link onClick={this._onBuildProfile}>Build Profile</Nav.Link>
+                                </>
+                            }
 
-                        top: 0,
-                        left: 0,
-                        height: '100%',
-                        width: '100%',
+                            {this.props.user ?
+                                <Nav.Link onClick={this._onSignOutSubmit}>Sign Out</Nav.Link> :
+                                <Nav.Link onClick={this._onSignInSubmit}>Sign In</Nav.Link>
+                            }
 
-                        backgroundImage: `url(${BackgroundImage})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center center',
-                        backgroundRepeat: 'no-repeat',
+                        </Nav>
+                    </Navbar.Collapse>
 
-                        cursor: 'default',
-                        fontFamily: 'Helvetica'
-                    }}
-                >
-
-                    {/* back button */}
-                    <div
-                        onClick={this._goToHome}
-                        style={{
-                            position: 'absolute',
-                            zIndex: 1,
-
-                            right: '30px',
-                            top: '20px',
-
-                            fontSize: '16px',
-                            fontFamily: 'Helvetica',
-                            fontWeight: 'bold',
-                            letterSpacing: '1px',
-                            cursor: 'pointer',
-
-                            userSelect: 'none',
-                            msUserSelect: 'none',
-                            KhtmlUserSelect: 'none',
-                            MozUserSelect: 'none'
-                        }}
-                    >
-                        [Back]
-                    </div>
-
-                    {/* sign in/out button */}
-                    <div
-                        onClick={this.props.user ? this._onSignOutSubmit : this._onSignInSubmit}
-                        style={{
-                            position: 'absolute',
-                            zIndex: 1,
-
-                            left: '30px',
-                            top: '20px',
-
-                            fontSize: '16px',
-                            fontFamily: 'Helvetica',
-                            fontWeight: 'bold',
-                            letterSpacing: '1px',
-                            cursor: 'pointer',
-
-                            userSelect: 'none',
-                            msUserSelect: 'none',
-                            KhtmlUserSelect: 'none',
-                            MozUserSelect: 'none'
-                        }}
-                    >
-                        {this.props.user ? '[Sign Out]' : '[Sign In]'}
-                    </div>
-
-                    {/* payment button */}
                     {this.props.user &&
-                        <div>
-                            <div
-                                onClick={this._onBuildProfile}
-                                style={{
-                                    position: 'absolute',
-                                    zIndex: 1,
-
-                                    left: '30px',
-                                    top: '60px',
-
-                                    fontSize: '16px',
-                                    fontFamily: 'Helvetica',
-                                    fontWeight: 'bold',
-                                    letterSpacing: '1px',
-                                    cursor: 'pointer',
-
-                                    userSelect: 'none',
-                                    msUserSelect: 'none',
-                                    KhtmlUserSelect: 'none',
-                                    MozUserSelect: 'none'
-                                }}
-                            >
-                                [Add Payment]
-                            </div>
-                        </div>
+                        <Navbar.Collapse className="justify-content-end">
+                            <Navbar.Text style={{ color: 'black' }}>
+                                {this.props.user.displayName}
+                            </Navbar.Text>
+                        </Navbar.Collapse>
                     }
 
-                    {/* payment button */}
-                    {this.props.user &&
-                        <div>
-                            <div
-                                onClick={this._onPaymentSubmit}
-                                style={{
-                                    position: 'absolute',
-                                    zIndex: 1,
+                </Navbar>
 
-                                    left: '30px',
-                                    top: '100px',
 
-                                    fontSize: '16px',
-                                    fontFamily: 'Helvetica',
-                                    fontWeight: 'bold',
-                                    letterSpacing: '1px',
-                                    cursor: 'pointer',
-
-                                    userSelect: 'none',
-                                    msUserSelect: 'none',
-                                    KhtmlUserSelect: 'none',
-                                    MozUserSelect: 'none'
-                                }}
-                            >
-                                [Build Profile]
-                            </div>
-                        </div>
-                    }
-
-                </div>
+            
             </>
         );
     }

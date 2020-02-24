@@ -1,8 +1,14 @@
 {
-    "name": "universal-plug",
-    "version": "0.1.0",
+    "name": "universal-plug-frontend",
+    "version": "1.0.0",
     "private": true,
+    "author": "Alex Langshur",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alangshur/universal-plug-frontend.git"
+    },
     "dependencies": {
+        "@firebase/analytics": "^0.2.13",
         "bootstrap": "^4.4.1",
         "firebase": "^7.8.2",
         "react": "^16.12.0",

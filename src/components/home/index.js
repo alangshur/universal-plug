@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-
-import TestImage from '../../assets/test.png';
-import BackgroundImage from '../../assets/background.png';
-import PlayIcon from '../../assets/play.png';
+import { Button } from 'react-bootstrap';
 
 import MediaLink from './media';
 import HomePlayer from './player';
 
-class HomePage extends Component {
+import TestImage from '../../assets/test.png';
+import PlayIcon from '../../assets/play.png';
 
+class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +20,6 @@ class HomePage extends Component {
     }
 
     togglePlayer = () => {
-        console.log('this')
         this.setState({ playerOpen: !this.state.playerOpen });
     }
 
@@ -39,29 +37,20 @@ class HomePage extends Component {
 
                 {/* auction button */}
                 {!this.state.playerOpen && 
-                    <div
+                    <Button
                         onClick={this._goToAuction}
+                        variant='outline-dark'
+                        size='sm'
                         style={{
                             position: 'absolute',
                             zIndex: 1,
 
-                            right: '30px',
+                            right: '20px',
                             top: '20px',
-
-                            fontSize: '16px',
-                            fontFamily: 'Helvetica',
-                            fontWeight: 'bold',
-                            letterSpacing: '1px',
-                            cursor: 'pointer',
-
-                            serSelect: 'none',
-                            msUserSelect: 'none',
-                            KhtmlUserSelect: 'none',
-                            MozUserSelect: 'none'
                         }}
                     >
-                        [Auction]
-                    </div>
+                        Auction
+                    </Button>
                 }
 
                 {/* page canvas */}
@@ -79,13 +68,8 @@ class HomePage extends Component {
                         height: '100%',
                         width: '100%',
 
-                        backgroundImage: `url(${BackgroundImage})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center center',
-                        backgroundRepeat: 'no-repeat',
-
-                        cursor: 'default',
-                        fontFamily: 'Helvetica'
+                        backgroundColor: '#f2f2f2',
+                        cursor: 'default'
                     }}
                 >
 
@@ -102,8 +86,7 @@ class HomePage extends Component {
 
                             backgroundImage: 'linear-gradient(lightblue, white)',
                             borderRadius: '60px',
-                            boxShadow: '0 0 10px lightgrey',
-
+                            boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
                         }}
                     >
 
@@ -112,7 +95,7 @@ class HomePage extends Component {
                             style={{
                                 display: 'flex',
                                 position: 'relative',
-                                marginTop: '14%',
+                                marginTop: '10%',
                                 top: 0,
                                 left: 0,
 
@@ -130,7 +113,7 @@ class HomePage extends Component {
                                     top: 0,
                                     left: 0,
 
-                                    height: '350px',
+                                    height: '400px',
                                     borderRadius: '25px',
                                     boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
@@ -162,11 +145,12 @@ class HomePage extends Component {
                         {/* profile title */}
                         <div
                             style={{
-                                marginTop: '25%',
+                                marginTop: '17%',
 
-                                fontSize: '30px',
-                                fontWeight: 'bold',
-                                letterSpacing: '2px',
+                                fontSize: '28px',
+                                letterSpacing: '1px',
+                                color: '#36454F',
+
                                 userSelect: 'none',
                                 msUserSelect: 'none',
                                 KhtmlUserSelect: 'none',
@@ -180,7 +164,7 @@ class HomePage extends Component {
                         <div
                             style={{
                                 display: 'flex',
-                                marginTop: '5%',
+                                marginTop: '6%',
                                 flexDirection: 'column'
                             }}
                         >
@@ -194,7 +178,7 @@ class HomePage extends Component {
                         {/* profile text */}
                         <div
                             style={{
-                                marginTop: '5%',
+                                marginTop: '6%',
                                 marginLeft: '52px',
                                 marginRight: '52px',
                                 marginBottom: '3%',
@@ -205,6 +189,7 @@ class HomePage extends Component {
                                 fontSize: '15px',
                                 color: '#36454F',
                                 lineHeight: '20px',
+                                
                                 userSelect: 'none',
                                 msUserSelect: 'none',
                                 KhtmlUserSelect: 'none',

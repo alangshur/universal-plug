@@ -18,6 +18,7 @@ class MediaLink extends Component {
             case 'website': icon = WebsiteIcon; break;
             case 'email': icon = EmailIcon; break;
             case 'linkedin': icon = LinkedInIcon; break;
+            default: break;
         }
 
         return (
