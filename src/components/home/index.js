@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import { isBrowser } from 'react-device-detect';
 
 import MediaLink from './media';
 import HomePlayer from './player';
@@ -11,7 +12,28 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            playerOpen: false
+            playerOpen: false,
+
+            /* profile data */
+            profileTitle: 'Alex Langshur',
+            profileImageLink: 'https://i.imgur.com/IHAoMzT.png',
+            profileVideoLink: 'https://streamable.com/bwkxc',
+            profileText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet egestas felis. Mauris dignissim augue diam, nec ultrices purus lobortis eu. Integer quis scelerisque diam, et fringilla enim.',
+            profileLink1: {
+                media: 'instagram',
+                text: 'alangshur',
+                link: 'http://www.instagram.com'
+            },
+            profileLink2: {
+                media: 'youtube',
+                text: 'alexlangshur',
+                link: 'http://www.youtube.com'
+            },
+            profileLink3: {
+                media: 'website',
+                text: 'alexlangshur.com',
+                link: 'http://www.google.com'
+            }
         };
     }
 
@@ -31,12 +53,12 @@ class HomePage extends Component {
                 {this.state.playerOpen &&
                     <HomePlayer
                         togglePlayer={this._togglePlayer}
-                        link='https://streamable.com/bwkxc'
+                        link={this.state.profileVideoLink}
                     />
                 }
 
                 {/* auction button */}
-                {!this.state.playerOpen &&
+                {!this.state.playerOpen && isBrowser &&
                     <Button
                         onClick={this._goToAuction}
                         variant='outline-dark'
@@ -86,7 +108,7 @@ class HomePage extends Component {
                             paddingTop: '60px',
                             paddingBottom: '60px',
 
-                            overflow: 'scroll',
+                            overflow: isBrowser ? 'hidden' : 'scroll',
                             backgroundImage: 'linear-gradient(lightblue, white)',
                             borderRadius: '60px',
                             boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
@@ -104,14 +126,14 @@ class HomePage extends Component {
 
                             {/* profile image */}
                             <img
-                                src='https://i.imgur.com/IHAoMzT.png'
+                                src={this.state.profileImageLink}
                                 alt='Profile IMG'
                                 draggable={false}
                                 style={{
                                     height: 'auto',
                                     width: 'auto',
                                     maxHeight: '400px',
-                                    maxWidth: '400px',
+                                    maxWidth: '83%',
 
                                     borderRadius: '15px',
                                     boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
@@ -149,7 +171,8 @@ class HomePage extends Component {
                             alt='Divider ICN'
                             draggable={false}
                             style={{
-                                width: '90px',
+                                width: '100px',
+                                paddingTop: '20px',
 
                                 opacity: '0.7',
                                 userSelect: 'none',
@@ -183,7 +206,7 @@ class HomePage extends Component {
                                     MozUserSelect: 'none'
                                 }}
                             >
-                                Alex Langshur
+                                {this.state.profileTitle}
                             </div>
 
                             {/* profile links */}
@@ -194,9 +217,9 @@ class HomePage extends Component {
                                     marginBottom: '20px'
                                 }}
                             >
-                                <MediaLink media='instagram' text='alangshur' link='http://www.google.com' />
-                                <MediaLink media='youtube' text='alexlangshur' link='http://www.google.com' />
-                                <MediaLink media='website' text='alexlangshur.com' link='http://www.google.com' />
+                                <MediaLink media={this.state.profileLink1.media} text={this.state.profileLink1.text} link={this.state.profileLink1.link} />
+                                <MediaLink media={this.state.profileLink2.media} text={this.state.profileLink2.text} link={this.state.profileLink2.link} />
+                                <MediaLink media={this.state.profileLink3.media} text={this.state.profileLink3.text} link={this.state.profileLink3.link} />
                             </div>
 
                             {/* profile text */}
@@ -218,7 +241,7 @@ class HomePage extends Component {
                                     MozUserSelect: 'none'
                                 }}
                             >
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet egestas felis. Mauris dignissim augue diam, nec ultrices purus lobortis eu. Integer quis scelerisque diam, et fringilla enim.
+                                {this.state.profileText}
                             </div>
                         </div>
                     </div>
