@@ -45,14 +45,6 @@ class AuctionPage extends Component {
 
     _onPaymentSubmit = event => {
         event.preventDefault();
-
-        fetch('https://us-central1-universal-plug.cloudfunctions.net/helloWorld')
-            .then((response) => {
-                return response.json();
-            })
-            .then((myJson) => {
-                console.log(myJson);
-            });
     }
 
     _onBuildProfile = event => {

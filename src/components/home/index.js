@@ -2,38 +2,21 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { isBrowser } from 'react-device-detect';
 
-import MediaLink from './media';
-import HomePlayer from './player';
-
 import PlayIcon from '../../assets/play.png';
 import DividerIcon from '../../assets/divider.png';
+
+import MediaLink from './media';
+import HomePlayer from './player';
+import LoadingPage from './load';
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             playerOpen: false,
-
-            /* profile data */
-            profileTitle: 'Alex Langshur',
-            profileImageLink: 'https://i.imgur.com/IHAoMzT.png',
-            profileVideoLink: 'https://streamable.com/bwkxc',
-            profileText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet egestas felis. Mauris dignissim augue diam, nec ultrices purus lobortis eu. Integer quis scelerisque diam, et fringilla enim.',
-            profileLink1: {
-                media: 'instagram',
-                text: 'alangshur',
-                link: 'http://www.instagram.com'
-            },
-            profileLink2: {
-                media: 'youtube',
-                text: 'alexlangshur',
-                link: 'http://www.youtube.com'
-            },
-            profileLink3: {
-                media: 'website',
-                text: 'alexlangshur.com',
-                link: 'http://www.google.com'
-            }
+            displayProfile: false, 
+            views: 0,
+            date: ''
         };
     }
 
@@ -45,7 +28,40 @@ class HomePage extends Component {
         this.setState({ playerOpen: !this.state.playerOpen });
     }
 
+    componentDidMount() {
+        fetch('https://us-central1-universal-plug.cloudfunctions.net/getProfile')
+        .then((response) => { return response.json(); })
+        .then((data) => {
+            const { error, profile } = data;
+            if (!error) {
+                this.setState({
+                    playerOpen: false,
+                    displayProfile: true, 
+                    views: profile.views,
+                    date: profile.date,
+        
+                    /* profile data */
+                    profileTitle: profile.title,
+                    profileColor: profile.color,
+                    profileImageLink: profile.imageLink,
+                    profileVideoLink: profile.videoLink,
+                    profileText: profile.text,
+                    profileLink1: profile.link1,
+                    profileLink2: profile.link2,
+                    profileLink3: profile.link3
+                });
+            }
+        });
+    }
+
     render() {
+        
+        // return loading page
+        if (!this.state.displayProfile) {
+            return <LoadingPage />;
+        }
+
+        // return profile page
         return (
             <>
 
@@ -109,7 +125,7 @@ class HomePage extends Component {
                             paddingBottom: '60px',
 
                             overflow: isBrowser ? 'hidden' : 'scroll',
-                            backgroundImage: 'linear-gradient(lightblue, white)',
+                            backgroundImage: 'linear-gradient(' + this.state.profileColor + ', white)',
                             borderRadius: '60px',
                             boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
                         }}
@@ -196,7 +212,7 @@ class HomePage extends Component {
                                 style={{
                                     marginBottom: '20px',
 
-                                    fontSize: '28px',
+                                    fontSize: '30px',
                                     letterSpacing: '1px',
                                     color: '#36454F',
 
