@@ -18,27 +18,27 @@ class AuctionPage extends Component {
 
     _onSignInSubmit = event => {
         this.props.firebase
-            .doSignIn()
-            .then(user => {
-                this.setState({ error: null });
-            })
-            .catch(error => {
-                this.setState({ error });
-            });
+        .doSignIn()
+        .then(user => {
+            this.setState({ error: null });
+        })
+        .catch(error => {
+            this.setState({ error });
+        });
 
         event.preventDefault();
     }
 
     _onSignOutSubmit = event => {
         this.props.firebase
-            .doSignOut()
-            .then(user => {
-                console.log(user);
-                this.setState({ error: null });
-            })
-            .catch(error => {
-                this.setState({ error });
-            });
+        .doSignOut()
+        .then(user => {
+            console.log(user);
+            this.setState({ error: null });
+        })
+        .catch(error => {
+            this.setState({ error });
+        });
 
         event.preventDefault();
     }
@@ -87,9 +87,6 @@ class AuctionPage extends Component {
                     }
 
                 </Navbar>
-
-
-            
             </>
         );
     }

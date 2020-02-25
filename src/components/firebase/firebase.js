@@ -1,9 +1,11 @@
 import app from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
 import 'firebase/analytics';
+import 'firebase/firestore';
 
-var config = {
+import { getDateString } from '../../utils';
+
+const config = {
     apiKey: "AIzaSyDOTJ2VnZmsyuxHNLAd_-LtGjZCE8_xnhg",
     authDomain: "universal-plug.firebaseapp.com",
     databaseURL: "https://universal-plug.firebaseio.com",
@@ -14,16 +16,20 @@ var config = {
     measurementId: "G-6ECP04B4NK"
 };
 
+const FUNCTIONS_URL = 'https://us-central1-universal-plug.cloudfunctions.net/';
+
 class Firebase {
     constructor() {
         app.initializeApp(config)
 
         this.auth = app.auth();
-        this.db = app.database();
+        this.db = app.firestore();
         this.analytics = app.analytics();
 
         this.googleProvider = new app.auth.GoogleAuthProvider();
     }
+
+
 
     /*** AUTH API ***/
 
@@ -37,6 +43,23 @@ class Firebase {
 
     getUser = () => {
         return this.auth.currentUser;
+    }
+
+
+
+    /*** PROFILE API ***/
+
+    getCurrentProfile = () => {
+        const currentDate = getDateString();
+        return this.db.collection('profiles').doc(currentDate).get()
+        .then(profile => {
+            if (profile.exists) return profile.data();
+            else return null;
+        });
+    }
+
+    registerView = () => {
+        return fetch(FUNCTIONS_URL + 'registerView');
     }
 }
 
