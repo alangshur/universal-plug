@@ -4,8 +4,8 @@ import { Button } from 'react-bootstrap';
 import MediaLink from './media';
 import HomePlayer from './player';
 
-import TestImage from '../../assets/test.png';
 import PlayIcon from '../../assets/play.png';
+import DividerIcon from '../../assets/divider.png';
 
 class HomePage extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class HomePage extends Component {
         this.props.history.push('/auction');
     }
 
-    togglePlayer = () => {
+    _togglePlayer = () => {
         this.setState({ playerOpen: !this.state.playerOpen });
     }
 
@@ -27,16 +27,16 @@ class HomePage extends Component {
         return (
             <>
 
-                {/* home video player */} 
-                {this.state.playerOpen && 
-                    <HomePlayer 
-                        togglePlayer={this.togglePlayer} 
+                {/* home video player */}
+                {this.state.playerOpen &&
+                    <HomePlayer
+                        togglePlayer={this._togglePlayer}
                         link='https://streamable.com/bwkxc'
                     />
                 }
 
                 {/* auction button */}
-                {!this.state.playerOpen && 
+                {!this.state.playerOpen &&
                     <Button
                         onClick={this._goToAuction}
                         variant='outline-dark'
@@ -59,7 +59,6 @@ class HomePage extends Component {
                     style={{
                         position: 'absolute',
                         display: 'flex',
-
                         justifyContent: 'center',
                         alignItems: 'center',
 
@@ -76,45 +75,45 @@ class HomePage extends Component {
                     {/* page cutout */}
                     <div
                         style={{
+                            position: 'relative',
                             display: 'flex',
-
                             alignItems: 'center',
+                            justifyContent: 'space-between',
                             flexDirection: 'column',
 
                             height: '90%',
                             width: '500px',
+                            paddingTop: '60px',
+                            paddingBottom: '60px',
 
+                            overflow: 'scroll',
                             backgroundImage: 'linear-gradient(lightblue, white)',
                             borderRadius: '60px',
                             boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
                         }}
                     >
 
-                        {/* profile image */}
+                        {/* profile top */}
                         <div
                             style={{
                                 display: 'flex',
-                                position: 'relative',
-                                marginTop: '10%',
-                                top: 0,
-                                left: 0,
-
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}
                         >
 
+                            {/* profile image */}
                             <img
-                                src={TestImage}
+                                src='https://i.imgur.com/IHAoMzT.png'
                                 alt='Profile IMG'
                                 draggable={false}
                                 style={{
-                                    position: 'relative',
-                                    top: 0,
-                                    left: 0,
+                                    height: 'auto',
+                                    width: 'auto',
+                                    maxHeight: '400px',
+                                    maxWidth: '400px',
 
-                                    height: '400px',
-                                    borderRadius: '25px',
+                                    borderRadius: '15px',
                                     boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
                                     userSelect: 'none',
@@ -124,16 +123,18 @@ class HomePage extends Component {
                                 }}
                             />
 
+                            {/* profile play icon */}
                             <img
                                 src={PlayIcon}
                                 alt='Play ICN'
                                 draggable={false}
-                                onClick={this.togglePlayer}
+                                onClick={this._togglePlayer}
                                 style={{
                                     position: 'absolute',
-                                    height: '125px',
-                                    cursor: 'pointer',
 
+                                    height: '125px',
+
+                                    cursor: 'pointer',
                                     userSelect: 'none',
                                     msUserSelect: 'none',
                                     KhtmlUserSelect: 'none',
@@ -141,64 +142,85 @@ class HomePage extends Component {
                                 }}
                             />
                         </div>
-
-                        {/* profile title */}
-                        <div
+ 
+                        {/* divider icon (middle) */}
+                        <img
+                            src={DividerIcon}
+                            alt='Divider ICN'
+                            draggable={false}
                             style={{
-                                marginTop: '17%',
+                                width: '90px',
 
-                                fontSize: '28px',
-                                letterSpacing: '1px',
-                                color: '#36454F',
-
+                                opacity: '0.7',
                                 userSelect: 'none',
                                 msUserSelect: 'none',
                                 KhtmlUserSelect: 'none',
                                 MozUserSelect: 'none'
                             }}
-                        >
-                            Alex Langshur
-                        </div>
+                        />
 
-                        {/* profile links */}
+                        {/* profile bottom */}
                         <div
                             style={{
                                 display: 'flex',
-                                marginTop: '6%',
+                                alignItems: 'center',
                                 flexDirection: 'column'
                             }}
                         >
 
-                            <MediaLink media='instagram' text='alangshur' link='http://www.google.com' />
-                            <MediaLink media='youtube' text='alexlangshur' link='http://www.google.com' />
-                            <MediaLink media='website' text='alexlangshur.com' link='http://www.google.com' />
+                            {/* profile title */}
+                            <div
+                                style={{
+                                    marginBottom: '20px',
 
+                                    fontSize: '28px',
+                                    letterSpacing: '1px',
+                                    color: '#36454F',
+
+                                    userSelect: 'none',
+                                    msUserSelect: 'none',
+                                    KhtmlUserSelect: 'none',
+                                    MozUserSelect: 'none'
+                                }}
+                            >
+                                Alex Langshur
+                            </div>
+
+                            {/* profile links */}
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    marginBottom: '20px'
+                                }}
+                            >
+                                <MediaLink media='instagram' text='alangshur' link='http://www.google.com' />
+                                <MediaLink media='youtube' text='alexlangshur' link='http://www.google.com' />
+                                <MediaLink media='website' text='alexlangshur.com' link='http://www.google.com' />
+                            </div>
+
+                            {/* profile text */}
+                            <div
+                                style={{
+                                    paddingLeft: '50px',
+                                    paddingRight: '50px',
+                                    bottom: 0,
+
+                                    fontStyle: 'italic',
+                                    textAlign: 'center',
+                                    fontSize: '15px',
+                                    color: '#36454F',
+                                    lineHeight: '20px',
+
+                                    userSelect: 'none',
+                                    msUserSelect: 'none',
+                                    KhtmlUserSelect: 'none',
+                                    MozUserSelect: 'none'
+                                }}
+                            >
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet egestas felis. Mauris dignissim augue diam, nec ultrices purus lobortis eu. Integer quis scelerisque diam, et fringilla enim.
+                            </div>
                         </div>
-
-                        {/* profile text */}
-                        <div
-                            style={{
-                                marginTop: '6%',
-                                marginLeft: '52px',
-                                marginRight: '52px',
-                                marginBottom: '3%',
-                                fontStyle: 'italic',
-
-                                overflow: 'scroll',
-                                textAlign: 'center',
-                                fontSize: '15px',
-                                color: '#36454F',
-                                lineHeight: '20px',
-                                
-                                userSelect: 'none',
-                                msUserSelect: 'none',
-                                KhtmlUserSelect: 'none',
-                                MozUserSelect: 'none'
-                            }}
-                        >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet egestas felis. Mauris dignissim augue diam, nec ultrices purus lobortis eu. Integer quis scelerisque diam, et fringilla enim.
-                        </div>
-
                     </div>
                 </div>
             </>

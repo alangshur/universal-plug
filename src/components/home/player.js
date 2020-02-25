@@ -63,11 +63,11 @@ class HomePlayer extends Component {
                 <Loader 
                     type='Oval' 
                     color='lightgrey'
-                    height='150px'
-                    width='150px'
+                    height={150}
+                    width={150}
                     style={{
                         position: 'absolute',
-                        zIndex: 1
+                        zIndex: '1'
                     }}
                 />
             </div>

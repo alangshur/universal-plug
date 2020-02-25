@@ -34,6 +34,10 @@ class MediaLink extends Component {
                         marginBottom: '10px',
 
                         opacity: '0.6',
+                        userSelect: 'none',
+                        msUserSelect: 'none',
+                        KhtmlUserSelect: 'none',
+                        MozUserSelect: 'none'
                     }}
                 />
 
@@ -41,6 +45,7 @@ class MediaLink extends Component {
                     target="_blank" 
                     rel="noopener noreferrer"
                     href={this.props.link}
+                    draggable={false}
                     style={{
                         marginLeft: '15px',
                         paddingBottom: '2px',
@@ -49,7 +54,11 @@ class MediaLink extends Component {
                         fontStyle: 'oblique',
                         color: 'black',
                         opacity: '0.6',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        userSelect: 'none',
+                        msUserSelect: 'none',
+                        KhtmlUserSelect: 'none',
+                        MozUserSelect: 'none'
                     }}
                 >
                     {this.props.text}
