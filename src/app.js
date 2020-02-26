@@ -8,7 +8,7 @@ import { AuthUserContext } from './components/session';
 import { withFirebase } from './components/firebase';
 
 class App extends Component {
-    constructor(props) { 
+    constructor(props) {
         super(props);
         this.state = {
             user: null,
@@ -20,8 +20,8 @@ class App extends Component {
         // subscribe to changes
         this.listener = this.props.firebase.auth.onAuthStateChanged(
             user => {
-                user ? 
-                    this.setState({ user }) : 
+                user ?
+                    this.setState({ user }) :
                     this.setState({ user: null });
             },
         );

@@ -16,7 +16,7 @@ class HomePage extends Component {
         super(props);
         this.state = {
             playerOpen: false,
-            displayProfile: false, 
+            displayProfile: false,
             views: null,
             date: ''
         };
@@ -34,48 +34,48 @@ class HomePage extends Component {
 
         // get current profile
         this.props.firebase.getCurrentProfile()
-        .then((profile) => {
-            if (profile) {
+            .then((profile) => {
+                if (profile) {
+                    this.setState({
+                        playerOpen: false,
+                        displayProfile: true,
+                        views: profile.views,
+                        date: profile.date,
 
-                console.log('Profile views: ' + profile.views);
-
-                this.setState({
-                    playerOpen: false,
-                    displayProfile: true, 
-                    views: profile.views,
-                    date: profile.date,
-        
-                    /* profile data */
-                    profileTitle: profile.title,
-                    profileColor: profile.color,
-                    profileImageLink: profile.imageLink,
-                    profileVideoLink: profile.videoLink,
-                    profileText: profile.text,
-                    profileLink1: profile.link1,
-                    profileLink2: profile.link2,
-                    profileLink3: profile.link3
-                });
-            }
-        })
-        .catch(err => {
-            console.log('getProfile: ' + err);
-        });
+                        /* profile data */
+                        profileTitle: profile.title,
+                        profileColor: profile.color,
+                        profileImageLink: profile.imageLink,
+                        profileVideoLink: profile.videoLink,
+                        profileText: profile.text,
+                        profileLink1: profile.link1,
+                        profileLink2: profile.link2,
+                        profileLink3: profile.link3
+                    });
+                }
+            })
+            .catch(err => {
+                console.log('getProfile: ' + err);
+            });
 
         // record profile view
         this.props.firebase.registerView()
-        .catch(err => {
-            console.log('registerView: ' + err);
-        });
+            .then(data => {
+                if (data.error) throw new Error('Failed to register view');
+            })
+            .catch(err => {
+                console.log('registerView: ' + err);
+            });
     }
 
     render() {
-        
+
         // set loading feature
         var centralFeature = undefined;
         if (!this.state.displayProfile) {
             centralFeature = (
-                <Loader 
-                    type='Oval' 
+                <Loader
+                    type='Oval'
                     color='grey'
                     height={150}
                     width={150}
@@ -144,14 +144,8 @@ class HomePage extends Component {
                             onClick={this._togglePlayer}
                             style={{
                                 position: 'absolute',
-
                                 height: '125px',
-
-                                cursor: 'pointer',
-                                userSelect: 'none',
-                                msUserSelect: 'none',
-                                KhtmlUserSelect: 'none',
-                                MozUserSelect: 'none'
+                                cursor: 'pointer'
                             }}
                         />
                     </div>
@@ -165,11 +159,7 @@ class HomePage extends Component {
                             width: '100px',
                             paddingTop: '20px',
 
-                            opacity: '0.7',
-                            userSelect: 'none',
-                            msUserSelect: 'none',
-                            KhtmlUserSelect: 'none',
-                            MozUserSelect: 'none'
+                            opacity: '0.7'
                         }}
                     />
 
@@ -189,12 +179,7 @@ class HomePage extends Component {
 
                                 fontSize: '30px',
                                 letterSpacing: '1px',
-                                color: '#36454F',
-
-                                userSelect: 'none',
-                                msUserSelect: 'none',
-                                KhtmlUserSelect: 'none',
-                                MozUserSelect: 'none'
+                                color: '#36454F'
                             }}
                         >
                             {this.state.profileTitle}
@@ -224,12 +209,7 @@ class HomePage extends Component {
                                 textAlign: 'center',
                                 fontSize: '15px',
                                 color: '#36454F',
-                                lineHeight: '20px',
-
-                                userSelect: 'none',
-                                msUserSelect: 'none',
-                                KhtmlUserSelect: 'none',
-                                MozUserSelect: 'none'
+                                lineHeight: '20px'
                             }}
                         >
                             {this.state.profileText}
@@ -241,7 +221,14 @@ class HomePage extends Component {
 
         // return profile page
         return (
-            <>
+            <div
+                style={{
+                    userSelect: 'none',
+                    msUserSelect: 'none',
+                    KhtmlUserSelect: 'none',
+                    MozUserSelect: 'none'
+                }}
+            >
 
                 {/* home video player */}
                 {this.state.playerOpen &&
@@ -256,7 +243,6 @@ class HomePage extends Component {
                     <Button
                         onClick={this._goToAuction}
                         variant='outline-dark'
-                        size='sm'
                         style={{
                             position: 'absolute',
                             zIndex: 1,
@@ -270,43 +256,51 @@ class HomePage extends Component {
                 }
 
                 {/* date/views banner */}
-                <div
-                    style={{
-                        position: 'absolute',
-                        display: 'flex',
-                        zIndex: 1,
-                        
-                        flexDirection: 'column',
-                        alignItems: 'center',
-
-                        top: '15px',
-                        left: '25px'
-                    }}
-                >
+                {isBrowser && 
                     <div
                         style={{
-                            fontWeight: 'bold',
-                            fontStyle: 'italic',
-                            letterSpacing: '3px',
-                            textDecoration: 'underline',
-                            fontSize: '28px'
-                        }}
-                    >
-                        {getFormattedDateString()}
-                    </div>
+                            position: 'absolute',
+                            display: 'flex',
+                            zIndex: 1,
 
-                    <div
-                        style={{
-                            marginTop: '5px',
-                            fontSize: '16px',
-                            fontStyle: 'italic'
+                            flexDirection: 'column',
+                            alignItems: 'center',
+
+                            top: '20px',
+                            left: '20px',
+                            padding: '10px',
+
+                            cursor: 'default',
+                            borderStyle: 'solid',
+                            borderWidth: '1px',
+                            borderRadius: '5px'
                         }}
                     >
-                        {this.state.views && 
-                            formatViewsCount(this.state.views) + ' Views Today'
-                        }
+                        <div
+                            style={{
+                                fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                letterSpacing: '1.5px',
+                                fontSize: '25px'
+                            }}
+                        >
+                            {getFormattedDateString()}
+                        </div>
+
+                        <div
+                            style={{
+                                marginTop: '3px',
+                                fontSize: '15px',
+                                fontStyle: 'italic',
+                                color: '#36454F'
+                            }}
+                        >
+                            {(this.state.views != null) &&
+                                formatViewsCount(this.state.views) + ' Views Today'
+                            }
+                        </div>
                     </div>
-                </div>
+                }
 
                 {/* page canvas */}
                 <div
@@ -328,7 +322,7 @@ class HomePage extends Component {
                 >
                     {centralFeature}
                 </div>
-            </>
+            </div>
         );
     }
 }

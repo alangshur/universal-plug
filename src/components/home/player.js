@@ -27,7 +27,7 @@ class HomePlayer extends Component {
 
                     justifyContent: 'center',
                     alignItems: 'center',
-                    
+
                     height: '100%',
                     width: '100%',
 
@@ -51,7 +51,7 @@ class HomePlayer extends Component {
                     Back
                 </Button>
 
-                <ReactPlayer 
+                <ReactPlayer
                     url={this.props.link}
                     onReady={this._setPlayerReady}
                     style={{
@@ -60,8 +60,8 @@ class HomePlayer extends Component {
                     }}
                 />
 
-                <Loader 
-                    type='Oval' 
+                <Loader
+                    type='Oval'
                     color='lightgrey'
                     height={150}
                     width={150}
@@ -72,7 +72,7 @@ class HomePlayer extends Component {
                 />
             </div>
         )
-    }   
-} 
+    }
+}
 
 export default HomePlayer;

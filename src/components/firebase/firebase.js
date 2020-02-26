@@ -50,16 +50,37 @@ class Firebase {
     /*** PROFILE API ***/
 
     getCurrentProfile = () => {
-        const currentDate = getDateString();
-        return this.db.collection('profiles').doc(currentDate).get()
-        .then(profile => {
-            if (profile.exists) return profile.data();
-            else return null;
-        });
+        const date = getDateString();
+        return this.db.collection('profiles').doc(date).get()
+            .then(profile => {
+                if (profile.exists) return profile.data();
+                else return null;
+            });
     }
 
     registerView = () => {
-        return fetch(FUNCTIONS_URL + 'registerView');
+        return fetch(FUNCTIONS_URL + 'registerView', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                return response.json();
+            });
+    }
+
+
+
+    /*** AUCTION API ***/
+
+    getCurrentAuction = () => {
+        const date = getDateString();
+        return this.db.collection('auctions').doc(date).get()
+            .then(auction => {
+                if (auction.exists) return auction.data();
+                else return null;
+            })
     }
 }
 

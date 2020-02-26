@@ -42,7 +42,7 @@ class MediaLink extends Component {
                 />
 
                 <a
-                    target="_blank" 
+                    target="_blank"
                     rel="noopener noreferrer"
                     href={this.props.link}
                     draggable={false}

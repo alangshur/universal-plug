@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 
+import AuctionConsole from './console';
 import { withFirebase } from '../firebase';
 import { withAuthUser } from '../session';
 
@@ -18,44 +19,53 @@ class AuctionPage extends Component {
 
     _onSignInSubmit = event => {
         this.props.firebase
-        .doSignIn()
-        .then(user => {
-            this.setState({ error: null });
-        })
-        .catch(error => {
-            this.setState({ error });
-        });
+            .doSignIn()
+            .then(user => {
+                this.setState({ error: null });
+            })
+            .catch(error => {
+                this.setState({ error });
+            });
 
         event.preventDefault();
     }
 
     _onSignOutSubmit = event => {
         this.props.firebase
-        .doSignOut()
-        .then(user => {
-            console.log(user);
-            this.setState({ error: null });
-        })
-        .catch(error => {
-            this.setState({ error });
-        });
+            .doSignOut()
+            .then(user => {
+                console.log(user);
+                this.setState({ error: null });
+            })
+            .catch(error => {
+                this.setState({ error });
+            });
 
         event.preventDefault();
     }
 
     _onPaymentSubmit = event => {
         event.preventDefault();
+        fetch('https://us-central1-universal-plug.cloudfunctions.net/createProfile')
     }
 
     _onBuildProfile = event => {
         event.preventDefault();
+        this.props.firebase.getCurrentAuction().then(data => console.log(data))
     }
 
     render() {
         const userLoggedIn = Boolean(this.props.user);
 
         return (
-            <>
+            <div
+                style={{
+                    userSelect: 'none',
+                    msUserSelect: 'none',
+                    KhtmlUserSelect: 'none',
+                    MozUserSelect: 'none'
+                }}
+            >
 
                 {/* user navbar */}
                 <Navbar bg="light" expand="lg" style={{ zIndex: 1 }}>
@@ -108,12 +118,24 @@ class AuctionPage extends Component {
                         cursor: 'default'
                     }}
                 >
+
+                    {userLoggedIn ?
+                        <AuctionConsole /> :
+
+                        <Button
+                            variant='outline-secondary'
+                            disabled
+                            style={{
+                                cursor: 'default',
+                                padding: '15px'
+                            }}
+                        >
+                            Sign In Above for Auction
+                        </Button>
+                    }
+
                 </div>
-
-                {/* {userLoggedIn && 
-
-                } */}
-            </>
+            </div>
         );
     }
 }

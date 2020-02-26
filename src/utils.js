@@ -35,7 +35,25 @@ export function getFormattedDateString() {
     return monthNames[dateComps[0] - 1] + ' ' + dateComps[1] + ', ' + dateComps[2];
 };
 
+// get current date written out from hypenated date
+export function getFormattedDateStringFromDate(date) {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+    const dateComps = date.split('-');
+    return monthNames[dateComps[0] - 1] + ' ' + dateComps[1] + ', ' + dateComps[2];
+}
+
 // format views count for large numbers
 export function formatViewsCount(views) {
     return views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// format US currency string
+export function currencyFormat(value) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+    });
+    return formatter.format(value);
 }
