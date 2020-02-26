@@ -26,3 +26,16 @@ export function getAdjacentDateStrings() {
         (date2.getMonth() + 1) + '-' + date2.getDate() + '-' + date2.getFullYear()
     ];
 }
+
+// get current date written out
+export function getFormattedDateString() {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+    const dateComps = getDateString().split('-');
+    return monthNames[dateComps[0] - 1] + ' ' + dateComps[1] + ', ' + dateComps[2];
+};
+
+// format views count for large numbers
+export function formatViewsCount(views) {
+    return views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

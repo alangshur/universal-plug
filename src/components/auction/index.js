@@ -52,25 +52,27 @@ class AuctionPage extends Component {
     }
 
     render() {
+        const userLoggedIn = Boolean(this.props.user);
+
         return (
             <>
 
                 {/* user navbar */}
-                <Navbar bg="light" expand="lg">
+                <Navbar bg="light" expand="lg" style={{ zIndex: 1 }}>
                     <Navbar.Brand href="/auction">Auction</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="/">Home</Nav.Link>
 
-                            {this.props.user &&
+                            {userLoggedIn &&
                                 <>
                                     <Nav.Link onClick={this._onPaymentSubmit}>Add Payment</Nav.Link>
                                     <Nav.Link onClick={this._onBuildProfile}>Build Profile</Nav.Link>
                                 </>
                             }
 
-                            {this.props.user ?
+                            {userLoggedIn ?
                                 <Nav.Link onClick={this._onSignOutSubmit}>Sign Out</Nav.Link> :
                                 <Nav.Link onClick={this._onSignInSubmit}>Sign In</Nav.Link>
                             }
@@ -78,7 +80,7 @@ class AuctionPage extends Component {
                         </Nav>
                     </Navbar.Collapse>
 
-                    {this.props.user &&
+                    {userLoggedIn &&
                         <Navbar.Collapse className="justify-content-end">
                             <Navbar.Text style={{ color: 'black' }}>
                                 {this.props.user.displayName}
@@ -87,6 +89,30 @@ class AuctionPage extends Component {
                     }
 
                 </Navbar>
+
+                {/* page canvas */}
+                <div
+                    draggable={false}
+                    style={{
+                        position: 'absolute',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+
+                        top: 0,
+                        left: 0,
+                        height: '100%',
+                        width: '100%',
+
+                        backgroundColor: '#f2f3f4',
+                        cursor: 'default'
+                    }}
+                >
+                </div>
+
+                {/* {userLoggedIn && 
+
+                } */}
             </>
         );
     }

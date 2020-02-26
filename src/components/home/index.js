@@ -4,6 +4,7 @@ import { isBrowser } from 'react-device-detect';
 import Loader from 'react-loader-spinner';
 
 import { withFirebase } from '../firebase';
+import { getFormattedDateString, formatViewsCount } from '../../utils';
 import MediaLink from './media';
 import HomePlayer from './player';
 
@@ -16,7 +17,7 @@ class HomePage extends Component {
         this.state = {
             playerOpen: false,
             displayProfile: false, 
-            views: 0,
+            views: null,
             date: ''
         };
     }
@@ -260,13 +261,52 @@ class HomePage extends Component {
                             position: 'absolute',
                             zIndex: 1,
 
-                            right: '20px',
                             top: '20px',
+                            right: '20px',
                         }}
                     >
                         Auction
                     </Button>
                 }
+
+                {/* date/views banner */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        display: 'flex',
+                        zIndex: 1,
+                        
+                        flexDirection: 'column',
+                        alignItems: 'center',
+
+                        top: '15px',
+                        left: '25px'
+                    }}
+                >
+                    <div
+                        style={{
+                            fontWeight: 'bold',
+                            fontStyle: 'italic',
+                            letterSpacing: '3px',
+                            textDecoration: 'underline',
+                            fontSize: '28px'
+                        }}
+                    >
+                        {getFormattedDateString()}
+                    </div>
+
+                    <div
+                        style={{
+                            marginTop: '5px',
+                            fontSize: '16px',
+                            fontStyle: 'italic'
+                        }}
+                    >
+                        {this.state.views && 
+                            formatViewsCount(this.state.views) + ' Views Today'
+                        }
+                    </div>
+                </div>
 
                 {/* page canvas */}
                 <div
@@ -282,7 +322,7 @@ class HomePage extends Component {
                         height: '100%',
                         width: '100%',
 
-                        backgroundColor: '#f2f2f2',
+                        backgroundColor: '#f2f3f4',
                         cursor: 'default'
                     }}
                 >
