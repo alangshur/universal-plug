@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 import AuctionConsole from './console';
 import { withFirebase } from '../firebase';
@@ -111,29 +111,92 @@ class AuctionPage extends Component {
 
                         top: 0,
                         left: 0,
-                        height: '100%',
+                        height: '100%', 
                         width: '100%',
 
-                        backgroundColor: '#f2f3f4',
+                        backgroundColor: '#eeeeee',
                         cursor: 'default'
                     }}
                 >
 
-                    {userLoggedIn ?
-                        <AuctionConsole /> :
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
 
-                        <Button
-                            variant='outline-secondary'
-                            disabled
+                            height: '100%',
+                            width: '100%',
+                        }}
+                    >
+
+                        {/* guidlines tab */}
+                        <div
                             style={{
-                                cursor: 'default',
-                                padding: '15px'
+                                display: 'flex',
+                                justifyContent: 'center',
+                                flexDirection: 'column',
+
+                                width: '45%',
+                                padding: '1.5%',
+
+                                color: '#36454F',
+                                backgroundColor: '#f8f9fa',
+                                borderRadius: '10px'
                             }}
                         >
-                            Sign In Above for Auction
-                        </Button>
-                    }
+                            <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                                Guidelines:
+                            </div>
+                            <div style={{ fontSize: '14px', marginTop: '10px', paddingLeft: '20px' }}>
+                                1.&ensp;
+                                <i>
+                                    Share your story with the world. Whether your goal is to build a
+                                    massive following, promote an important message, or run for president,
+                                    it all starts with your story.
+                                </i>
+                            </div>
+                            <div style={{ fontSize: '14px', marginTop: '10px', paddingLeft: '20px' }}>
+                                2.&ensp;
+                                <i>
+                                    No advertisements please. People come to the site to learn
+                                    about you, not a product.
+                                </i>
+                            </div>
+                            <div style={{ fontSize: '14px', marginTop: '10px', paddingLeft: '20px' }}>
+                                3.&ensp;
+                                <i>
+                                    For one entire day [starting and ending at midnight PST],
+                                    you are the center of attention.
+                                </i>
+                            </div>
+                        </div>
 
+                        {/* auction console */}
+                        {userLoggedIn ?
+                            <AuctionConsole /> :
+
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+
+                                    width: '45%',
+                                    padding: '1.5%',
+                                    marginTop: '4%',
+
+                                    color: '#36454F',
+                                    backgroundColor: '#f8f9fa',
+                                    borderRadius: '10px'
+                                }}
+                            >
+                                Sign In Above for Auction
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         );

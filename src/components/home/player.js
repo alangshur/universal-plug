@@ -31,7 +31,8 @@ class HomePlayer extends Component {
                     height: '100%',
                     width: '100%',
 
-                    backgroundColor: 'rgba(0, 0, 0, 0.65)'
+                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                    backdropFilter: 'blur(4px)'
                 }}
             >
 

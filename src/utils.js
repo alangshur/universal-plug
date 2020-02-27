@@ -1,4 +1,11 @@
 
+// get PST date object
+export function getPSTDate() {
+    var d = new Date();
+    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    return new Date(utc - 8 * 3600000);
+}
+
 // get current date (e.g. 2-24-2020)
 export function getDateString() {
 

@@ -242,13 +242,18 @@ class HomePage extends Component {
                 {!this.state.playerOpen && isBrowser &&
                     <Button
                         onClick={this._goToAuction}
-                        variant='outline-dark'
+                        variant='light'
                         style={{
                             position: 'absolute',
                             zIndex: 1,
 
                             top: '20px',
                             right: '20px',
+
+                            color: '#36454F',
+                            borderWidth: '0px',
+                            backgroundColor: '#f8f9fa',
+                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)'
                         }}
                     >
                         Auction
@@ -268,12 +273,13 @@ class HomePage extends Component {
 
                             top: '20px',
                             left: '20px',
-                            padding: '10px',
+                            padding: '12px',
 
+                            color: '#36454F',
                             cursor: 'default',
-                            borderStyle: 'solid',
-                            borderWidth: '1px',
-                            borderRadius: '5px'
+                            borderRadius: '7px',
+                            backgroundColor: '#f8f9fa',
+                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
                         }}
                     >
                         <div
@@ -289,10 +295,9 @@ class HomePage extends Component {
 
                         <div
                             style={{
-                                marginTop: '3px',
+                                marginTop: '8px',
                                 fontSize: '15px',
                                 fontStyle: 'italic',
-                                color: '#36454F'
                             }}
                         >
                             {(this.state.views != null) &&
@@ -316,7 +321,7 @@ class HomePage extends Component {
                         height: '100%',
                         width: '100%',
 
-                        backgroundColor: '#f2f3f4',
+                        backgroundColor: '#eeeeee',
                         cursor: 'default'
                     }}
                 >
