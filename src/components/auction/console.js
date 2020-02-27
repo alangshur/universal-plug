@@ -62,6 +62,8 @@ class AuctionConsole extends Component {
     _closeConfirmationModal = () => {
         this.setState({
             confirmationOpen: false
+        }, () => {
+            this._udpateCurrentAuction();
         });
     }
 

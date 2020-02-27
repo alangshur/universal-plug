@@ -193,7 +193,7 @@ class AuctionPage extends Component {
                                     borderRadius: '10px'
                                 }}
                             >
-                                Sign In Above for Auction
+                                Sign In for Auction
                             </div>
                         }
                     </div>
