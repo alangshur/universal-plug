@@ -5,7 +5,6 @@ import Loader from 'react-loader-spinner';
 import CountdownTimer from './timer';
 import ConfirmationModal from './confirmation';
 import { withFirebase } from '../firebase';
-import { withAuthUser } from '../session';
 import {
     getFormattedDateStringFromDate,
     currencyFormat
@@ -20,6 +19,7 @@ class AuctionConsole extends Component {
             error: '',
             fetching: true,
             confirmationOpen: false,
+            lastUpdate: null,
 
             userBidValue: '',
             submittedUserBid: null,
@@ -33,15 +33,17 @@ class AuctionConsole extends Component {
     }
 
     componentDidMount() {
-        this._udpateCurrentAuction();
+        this._updateCurrentAuction();
     }
 
-    _udpateCurrentAuction = () => {
+    _updateCurrentAuction = () => {
+        if (Date.now() - this.state.lastUpdate < 3000) return;
         this.setState({ fetching: true }, () => {
             this.props.firebase.getCurrentAuction()
                 .then(auction => {
                     this.setState({
                         fetching: false,
+                        lastUpdate: Date.now(),
                         auctionBid: Number(auction.bid),
                         auctionDate: auction.date,
                         auctionTarget: auction.target
@@ -51,6 +53,7 @@ class AuctionConsole extends Component {
                     console.log('getCurrentAuction: ' + err);
                     this.setState({
                         fetching: false,
+                        lastUpdate: Date.now(),
                         auctionBid: null,
                         auctionDate: null,
                         auctionTarget: null
@@ -63,7 +66,7 @@ class AuctionConsole extends Component {
         this.setState({
             confirmationOpen: false
         }, () => {
-            this._udpateCurrentAuction();
+            this._updateCurrentAuction();
         });
     }
 
@@ -129,7 +132,7 @@ class AuctionConsole extends Component {
     }
 
     _handleBidRefresh = () => {
-        this._udpateCurrentAuction();
+        this._updateCurrentAuction();
     }
 
     render() {
@@ -289,7 +292,7 @@ class AuctionConsole extends Component {
 
                         /* inactive auction */
                         <div style={{ color: '#36454F' }}>
-                            No Running Auction
+                            Next Auction Will Start Soon
                         </div>
                     }
                 </div>
@@ -298,4 +301,4 @@ class AuctionConsole extends Component {
     }
 }
 
-export default withFirebase(withAuthUser(AuctionConsole));
+export default withFirebase(AuctionConsole);

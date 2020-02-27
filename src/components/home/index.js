@@ -61,7 +61,7 @@ class HomePage extends Component {
         // record profile view
         this.props.firebase.registerView()
             .then(data => {
-                if (data.error) throw new Error('Failed to register view');
+                if (data.success) throw new Error('Failed to register view');
             })
             .catch(err => {
                 console.log('registerView: ' + err);

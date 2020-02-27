@@ -82,6 +82,23 @@ class Firebase {
                 else return null;
             })
     }
+
+    bidCurrentAuction = (bid) => {
+        return this.getUser().getIdToken()
+            .then(token => {
+                return fetch(FUNCTIONS_URL + 'bidCurrentAuction', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                        'Bid': bid
+                    }
+                })
+                    .then(response => {
+                        return response.json();
+                    });
+            });
+    }
 }
 
 export default Firebase;

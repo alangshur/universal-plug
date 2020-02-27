@@ -6,12 +6,18 @@ class CountdownTimer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            timeLeft: '0'
+            timeLeft: '0',
+            currentTimeout: null
         };
     }
 
     componentDidMount() {
         this._updateTime();
+    }
+
+    componentWillUnmount() {
+        try { clearTimeout(this.state.currentTimeout); }
+        catch (err) {}
     }
 
     _updateTime = () => {
@@ -24,15 +30,21 @@ class CountdownTimer extends Component {
         var timeLeft = '';
         if (hoursLeft > 0) {
             timeLeft = hoursLeft + ' h, ' + minutesLeft + ' m';
-            setTimeout(this._updateTime, 60000);
+            this.setState({ 
+                currentTimeout: setTimeout(this._updateTime, 60000) 
+            });
         }
         else if (minutesLeft > 0) {
             timeLeft = minutesLeft + ' m, ' + secondsLeft + ' s';;
-            setTimeout(this._updateTime, 1000);
+            this.setState({ 
+                currentTimeout: setTimeout(this._updateTime, 1000) 
+            });
         }
         else if (secondsLeft > 0) {
             timeLeft = secondsLeft + ' s';
-            setTimeout(this._updateTime, 1000);
+            this.setState({ 
+                currentTimeout: setTimeout(this._updateTime, 1000) 
+            });
         }
 
         this.setState({ timeLeft: timeLeft });

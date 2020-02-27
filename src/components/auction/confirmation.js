@@ -1,18 +1,48 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
 
+import { withFirebase } from '../firebase';
 import { currencyFormat } from '../../utils';
 
-class ConfirmationModal extends Component { 
+class ConfirmationModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: ''
+            error: '',
+            success: '',
+            fetching: false
         }
     }
 
     _handleConfirmationSubmit = () => {
-        console.log('Submitting bid: $' + this.props.bid);
+        this.setState({ fetching: true }, () => {
+            this.props.firebase.bidCurrentAuction(this.props.bid)
+                .then(data => {
+                    if (data.success) {
+                        this.setState({
+                            fetching: false,
+                            success: 'Successfully placed bid.'
+                        });
+                    }
+                    else {
+                        if (data.message) {
+                            this.setState({
+                                fetching: false,
+                                error: data.message
+                            });
+                        }
+                        else throw Error('Cannot resolve error');
+                    }
+                })
+                .catch(err => {
+                    console.log('bidCurrentAuction: ' + err);
+                    this.setState({ 
+                        fetching: false,
+                        error: 'Unexpected error. Please refresh auction.'
+                    });
+                });
+        });
     }
 
     _handleBackSubmit = () => {
@@ -23,7 +53,7 @@ class ConfirmationModal extends Component {
 
     render() {
         return (
-            <div 
+            <div
                 style={{
                     position: 'absolute',
                     display: 'flex',
@@ -52,37 +82,60 @@ class ConfirmationModal extends Component {
                             flexDirection: 'column'
                         }}
                     >
-                        <div>
-                            Are you sure you want to submit a bid of&nbsp;
-                            <b>{currencyFormat(this.props.bid)}</b>?
-                        </div>
 
-                        {this.state.error && 
-                            <div 
-                                style={{
-                                    marginTop: '6px',
-                                    color: '#dc3545',
-                                    fontSize: '12px'
-                                }}
-                            >
-                                {this.state.error}
-                            </div>
+                        {this.state.fetching ?
+                            <Loader
+                                type='Oval'
+                                color='grey'
+                                height={50}
+                                width={50}
+                            /> :
+
+                            <>
+                                <div>
+                                    Are you sure you want to submit a bid of&nbsp;
+                                    <b>{currencyFormat(this.props.bid)}</b>?
+                                </div>
+
+                                {this.state.error &&
+                                    <div
+                                        style={{
+                                            marginTop: '6px',
+                                            color: '#dc3545',
+                                            fontSize: '12px'
+                                        }}
+                                    >
+                                        {this.state.error}
+                                    </div>
+                                }
+
+                                {this.state.success &&
+                                    <div
+                                        style={{
+                                            marginTop: '6px',
+                                            color: '#28a745',
+                                            fontSize: '12px'
+                                        }}
+                                    >
+                                        {this.state.success}
+                                    </div>
+                                }
+                            </>
                         }
 
-                        
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button 
-                            className='mr-auto' 
+                        <Button
+                            className='mr-auto'
                             variant='secondary'
                             onClick={this._handleBackSubmit}
                         >
                             Back
                         </Button>
 
-                        {!this.state.error && 
-                            <Button 
+                        {!this.state.error && !this.state.success &&
+                            <Button
                                 variant='dark'
                                 onClick={this._handleConfirmationSubmit}
                             >
@@ -96,4 +149,4 @@ class ConfirmationModal extends Component {
     }
 }
 
-export default ConfirmationModal;
+export default withFirebase(ConfirmationModal);
