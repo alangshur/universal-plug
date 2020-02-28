@@ -126,8 +126,8 @@ class HomePage extends Component {
                                 maxHeight: '400px',
                                 maxWidth: '75%',
 
-                                borderRadius: '5px',
-                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                                borderRadius: '10px',
+                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.25)',
 
                                 userSelect: 'none',
                                 msUserSelect: 'none',
@@ -247,8 +247,8 @@ class HomePage extends Component {
                             position: 'absolute',
                             zIndex: 1,
 
-                            top: '20px',
-                            right: '20px',
+                            top: '25px',
+                            right: '25px',
 
                             color: '#36454F',
                             borderWidth: '0px',
@@ -271,9 +271,12 @@ class HomePage extends Component {
                             flexDirection: 'column',
                             alignItems: 'center',
 
-                            top: '20px',
-                            left: '20px',
-                            padding: '12px',
+                            top: '25px',
+                            left: '25px',
+                            paddingTop: '13px',
+                            paddingBottom: '16px',
+                            paddingLeft: '22px',
+                            paddingRight: '22px',
 
                             color: '#36454F',
                             cursor: 'default',
@@ -285,7 +288,6 @@ class HomePage extends Component {
                         <div
                             style={{
                                 fontWeight: 'bold',
-                                fontStyle: 'italic',
                                 letterSpacing: '1.5px',
                                 fontSize: '25px'
                             }}
@@ -295,7 +297,7 @@ class HomePage extends Component {
 
                         <div
                             style={{
-                                marginTop: '8px',
+                                marginTop: '6px',
                                 fontSize: '15px',
                                 fontStyle: 'italic',
                             }}

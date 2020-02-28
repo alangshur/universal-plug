@@ -37,7 +37,6 @@ class AuctionConsole extends Component {
 
     componentDidMount() {
         this._updateCurrentAuction();
-        console.log(getPSTMidnightEpoch())
         this.setState({
             currentTimeout: setTimeout(
                 this.updateTimeout, 

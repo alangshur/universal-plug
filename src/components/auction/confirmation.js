@@ -68,7 +68,7 @@ class ConfirmationModal extends Component {
                     backdropFilter: 'blur(3px)'
                 }}
             >
-                <Modal.Dialog>
+                <Modal.Dialog style={{ width: '25%' }}>
                     <Modal.Header>
                         <Modal.Title>Confirm Your Bid</Modal.Title>
                     </Modal.Header>
@@ -79,7 +79,7 @@ class ConfirmationModal extends Component {
                             justifyContent: 'center',
                             alignItems: 'center',
                             textAlign: 'center',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
                         }}
                     >
 
@@ -134,7 +134,7 @@ class ConfirmationModal extends Component {
                             Back
                         </Button>
 
-                        {!this.state.error && !this.state.success &&
+                        {!this.state.fetching && !this.state.error && !this.state.success &&
                             <Button
                                 variant='dark'
                                 onClick={this._handleConfirmationSubmit}
