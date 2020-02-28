@@ -7,7 +7,8 @@ import ConfirmationModal from './confirmation';
 import { withFirebase } from '../firebase';
 import {
     getFormattedDateStringFromDate,
-    currencyFormat
+    currencyFormat,
+    getPSTMidnightEpoch
 } from '../../utils';
 
 import RefreshIcon from '../../assets/refresh.png';
@@ -19,7 +20,9 @@ class AuctionConsole extends Component {
             error: '',
             fetching: true,
             confirmationOpen: false,
+
             lastUpdate: null,
+            currentTimeout: null,
 
             userBidValue: '',
             submittedUserBid: null,
@@ -34,10 +37,22 @@ class AuctionConsole extends Component {
 
     componentDidMount() {
         this._updateCurrentAuction();
+        console.log(getPSTMidnightEpoch())
+        this.setState({
+            currentTimeout: setTimeout(
+                this.updateTimeout, 
+                getPSTMidnightEpoch()
+            )
+        });
+    }
+
+    componentWillUnmount() {
+        if (this.state.currentTimeout) 
+            clearTimeout(this.state.currentTimeout);
     }
 
     _updateCurrentAuction = () => {
-        if (Date.now() - this.state.lastUpdate < 3000) return;
+        if (Date.now() - this.state.lastUpdate < 2000) return;
         this.setState({ fetching: true }, () => {
             this.props.firebase.getCurrentAuction()
                 .then(auction => {

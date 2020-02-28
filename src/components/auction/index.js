@@ -46,7 +46,6 @@ class AuctionPage extends Component {
 
     _onPaymentSubmit = event => {
         event.preventDefault();
-        fetch('https://us-central1-universal-plug.cloudfunctions.net/createProfile')
     }
 
     _onBuildProfile = event => {

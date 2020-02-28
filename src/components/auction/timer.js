@@ -16,13 +16,13 @@ class CountdownTimer extends Component {
     }
 
     componentWillUnmount() {
-        try { clearTimeout(this.state.currentTimeout); }
-        catch (err) {}
+        if (this.state.currentTimeout)
+            clearTimeout(this.state.currentTimeout);
     }
 
     _updateTime = () => {
         const now = getPSTDate();
-        const hoursLeft = 24 - now.getHours();
+        const hoursLeft = 23 - now.getHours();
         const minutesLeft = 59 - now.getMinutes();
         const secondsLeft = 59 - now.getSeconds();
 

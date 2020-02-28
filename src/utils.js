@@ -6,6 +6,17 @@ export function getPSTDate() {
     return new Date(utc - 8 * 3600000);
 }
 
+// get time till PST midnight in epoch ms 
+export function getPSTMidnightEpoch() {
+    var now = getPSTDate();
+    var ms = 0;
+    ms += (23 - now.getHours()) * 3600000;
+    ms += (59 - now.getMinutes()) * 60000;
+    ms += (59 - now.getSeconds()) * 1000;
+    ms += 1000 - now.getMilliseconds();
+    return ms;
+}
+
 // get current date (e.g. 2-24-2020)
 export function getDateString() {
 
