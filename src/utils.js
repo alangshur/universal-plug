@@ -1,5 +1,5 @@
 
-// get PST date object
+// get current PST date object
 export function getPSTDate() {
     var d = new Date();
     var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
@@ -17,7 +17,7 @@ export function getPSTMidnightEpoch() {
     return ms;
 }
 
-// get current date (e.g. 2-24-2020)
+// get current PST date (e.g. 2-24-2020)
 export function getDateString() {
 
     // get PST date
@@ -29,7 +29,19 @@ export function getDateString() {
     return (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
 }
 
-// get current date and previous date
+// get previous PST date (e.g. 2-23-2020)
+export function getPreviousDateString() {
+
+    // get PST date
+    var d = new Date();
+    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    var date = new Date(utc - 32 * 3600000);
+
+    // return date string
+    return (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+}
+
+// get current PST date and previous PST date
 export function getAdjacentDateStrings() {
 
     // get PST date
@@ -53,7 +65,7 @@ export function getFormattedDateString() {
     return monthNames[dateComps[0] - 1] + ' ' + dateComps[1] + ', ' + dateComps[2];
 };
 
-// get current date written out from hypenated date
+// get date written out from hyphenated date
 export function getFormattedDateStringFromDate(date) {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'];

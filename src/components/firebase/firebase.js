@@ -3,7 +3,10 @@ import 'firebase/auth';
 import 'firebase/analytics';
 import 'firebase/firestore';
 
-import { getDateString } from '../../utils';
+import { 
+    getDateString,
+    getPreviousDateString 
+} from '../../utils';
 
 const config = {
     apiKey: "AIzaSyDOTJ2VnZmsyuxHNLAd_-LtGjZCE8_xnhg",
@@ -70,7 +73,16 @@ class Firebase {
             });
     }
 
-
+    verifyUserProfilePosition = () => {
+        const date = getPreviousDateString();
+        const userId = this.getUser().uid;
+        return this.db.collection('users').doc(userId)
+            .collection('auctions').doc(date).get()
+            .then(position => {
+                if (!position.exists || !position.data().winner) return false;
+                else return true;
+            });
+    }
 
     /*** AUCTION API ***/
 
@@ -97,6 +109,17 @@ class Firebase {
                     .then(response => {
                         return response.json();
                     });
+            });
+    }
+
+    verifyUserAuctionPosition = () => {
+        const date = getDateString();
+        const userId = this.getUser();
+        return this.db.collection('users').doc(userId)
+            .collection('auctions').doc(date).get()
+            .then(position => {
+                if (!position.exists) return null
+                return position.data()
             });
     }
 }

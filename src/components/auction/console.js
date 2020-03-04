@@ -21,7 +21,7 @@ class AuctionConsole extends Component {
             fetching: true,
             confirmationOpen: false,
 
-            lastUpdate: null,
+            lastUpdate: 0,
             currentTimeout: null,
 
             userBidValue: '',
@@ -31,7 +31,8 @@ class AuctionConsole extends Component {
 
             auctionBid: null,
             auctionDate: null,
-            auctionTarget: null
+            auctionTarget: null,
+            auctionUserBid: null
         };
     }
 
@@ -39,7 +40,7 @@ class AuctionConsole extends Component {
         this._updateCurrentAuction();
         this.setState({
             currentTimeout: setTimeout(
-                this.updateTimeout, 
+                this._updateCurrentAuction, 
                 getPSTMidnightEpoch()
             )
         });
@@ -52,6 +53,8 @@ class AuctionConsole extends Component {
 
     _updateCurrentAuction = () => {
         if (Date.now() - this.state.lastUpdate < 2000) return;
+
+        // get current auction data
         this.setState({ fetching: true }, () => {
             this.props.firebase.getCurrentAuction()
                 .then(auction => {
@@ -73,6 +76,16 @@ class AuctionConsole extends Component {
                         auctionTarget: null
                     });
                 });
+        });
+    }
+
+    _updateCurrentUserBid = (bid) => {
+        this.setState({ 
+            auctionUserBid: bid,
+            userBidValue: '',
+            submittedUserBid: null,
+            validUserBid: false,
+            invalidUserBid: false,
         });
     }
 
@@ -164,6 +177,9 @@ class AuctionConsole extends Component {
             );
         }
 
+        if (this.state.auctionBid === this.state.auctionUserBid)
+            var userHasTopBid = true;
+
         return (
             <>
 
@@ -172,6 +188,7 @@ class AuctionConsole extends Component {
                     <ConfirmationModal
                         bid={this.state.submittedUserBid}
                         back={this._closeConfirmationModal}
+                        updateUserBid={this._updateCurrentUserBid}
                     />
                 }
 
@@ -185,7 +202,7 @@ class AuctionConsole extends Component {
 
                         width: '45%',
                         padding: '1.5%',
-                        marginTop: '4%',
+                        marginTop: '3%',
 
                         color: '#36454F',
                         backgroundColor: '#f8f9fa',
@@ -237,7 +254,7 @@ class AuctionConsole extends Component {
                                     padding: '7px',
 
                                     cursor: 'default',
-                                    borderColor: '#ced4da',
+                                    borderColor: userHasTopBid ? '#28a745' : '#ced4da',
                                     borderStyle: 'solid',
                                     borderWidth: '1px',
                                     borderRadius: '5px',
@@ -245,7 +262,10 @@ class AuctionConsole extends Component {
                                 }}
                             >
                                 <div>
-                                    <b>Top Bid:&nbsp;&nbsp;</b>{currencyFormat(this.state.auctionBid)}
+                                    <b>
+                                        Top Bid{userHasTopBid ? ' (Yours)' : ''}:&nbsp;&nbsp;
+                                    </b>
+                                    {currencyFormat(this.state.auctionBid)}
                                 </div>
 
                                 <img

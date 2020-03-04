@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 
 import AuctionConsole from './console';
+import ProfileTab from './profile';
 import { withFirebase } from '../firebase';
 import { withAuthUser } from '../session';
 
@@ -9,7 +10,7 @@ class AuctionPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: null
+            winner: false
         };
     }
 
@@ -20,11 +21,8 @@ class AuctionPage extends Component {
     _onSignInSubmit = event => {
         this.props.firebase
             .doSignIn()
-            .then(user => {
-                this.setState({ error: null });
-            })
-            .catch(error => {
-                this.setState({ error });
+            .catch(err => {
+                console.log('signIn: ' + err);
             });
 
         event.preventDefault();
@@ -33,24 +31,20 @@ class AuctionPage extends Component {
     _onSignOutSubmit = event => {
         this.props.firebase
             .doSignOut()
-            .then(user => {
-                console.log(user);
-                this.setState({ error: null });
-            })
-            .catch(error => {
-                this.setState({ error });
+            .catch(err => {
+                console.log('signOut: ' + err);
             });
 
-        event.preventDefault();
-    }
-
-    _onPaymentSubmit = event => {
         event.preventDefault();
     }
 
     _onBuildProfile = event => {
         event.preventDefault();
         this.props.firebase.getCurrentAuction().then(data => console.log(data))
+    }
+
+    _verifyUserProfile = () => {
+        
     }
 
     render() {
@@ -72,18 +66,16 @@ class AuctionPage extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-
-                            {userLoggedIn &&
-                                <>
-                                    <Nav.Link onClick={this._onPaymentSubmit}>Add Payment</Nav.Link>
-                                    <Nav.Link onClick={this._onBuildProfile}>Build Profile</Nav.Link>
-                                </>
-                            }
+                            <Nav.Link href="/" style={{ marginLeft: '7px' }}>Home</Nav.Link>
 
                             {userLoggedIn ?
-                                <Nav.Link onClick={this._onSignOutSubmit}>Sign Out</Nav.Link> :
-                                <Nav.Link onClick={this._onSignInSubmit}>Sign In</Nav.Link>
+                                <Nav.Link onClick={this._onSignOutSubmit} style={{ marginLeft: '7px' }}>
+                                    Sign Out
+                                </Nav.Link> :
+
+                                <Nav.Link onClick={this._onSignInSubmit} style={{ marginLeft: '7px' }}>
+                                    Sign In
+                                </Nav.Link>
                             }
 
                         </Nav>
@@ -110,7 +102,7 @@ class AuctionPage extends Component {
 
                         top: 0,
                         left: 0,
-                        height: '100%', 
+                        height: '100%',
                         width: '100%',
 
                         backgroundColor: '#eeeeee',
@@ -185,14 +177,38 @@ class AuctionPage extends Component {
 
                                     width: '45%',
                                     padding: '1.5%',
-                                    marginTop: '4%',
+                                    marginTop: '3%',
 
                                     color: '#36454F',
                                     backgroundColor: '#f8f9fa',
                                     borderRadius: '10px'
                                 }}
                             >
-                                Sign In for Auction
+                                Sign In to Join Auction
+                            </div>
+                        }
+
+                        {/* profile tab */}
+                        {userLoggedIn ?
+                            <ProfileTab /> :
+
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+
+                                    width: '45%',
+                                    padding: '1.5%',
+                                    marginTop: '3%',
+
+                                    color: '#36454F',
+                                    backgroundColor: '#f8f9fa',
+                                    borderRadius: '10px'
+                                }}
+                            >
+                                Sign In to Build Your Profiles
                             </div>
                         }
                     </div>
