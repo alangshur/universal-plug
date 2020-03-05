@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { withFirebase } from '../firebase';
 import { 
     getFormattedDateString, 
     formatViewsCount,
@@ -13,16 +14,29 @@ class HomeBanner extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentTimeout: null,
             heartPressed: false,
             crossPressed: false,
 
-            hearts: 0,
-            crosses: 0,
             userHearts: 0,
             userCrosses: 0,
             userHeartsAdded: 0,
             userCrossesAdded: 0
         };
+    }
+
+    componentDidMount() {
+        this.setState({
+            currentTimeout: setTimeout(
+                this._registerHeartsAndCrosses, 
+                30000
+            )
+        });
+    }
+
+    componentWillUnmount() {
+        if (this.state.currentTimeout) 
+            clearTimeout(this.state.currentTimeout);
     }
 
     _handleHeartPress = () => {
@@ -32,7 +46,7 @@ class HomeBanner extends Component {
         }, () => {
             setTimeout(() => {
                 this.setState({ heartPressed: false });
-            }, 150);
+            }, 200);
         });
     }
 
@@ -43,7 +57,44 @@ class HomeBanner extends Component {
         }, () => {
             setTimeout(() => {
                 this.setState({ crossPressed: false });
-            }, 150);
+            }, 200);
+        });
+    }
+
+    _registerHeartsAndCrosses = () => {
+        const addHearts = this.state.userHearts - this.state.userHeartsAdded;
+        const addCrosses = this.state.userCrosses - this.state.userCrossesAdded;
+
+        // register additional hearts
+        if (addHearts > 0) {
+            this.props.firebase.registerHearts(addHearts)
+                .then(data => {
+                    if (data.success) this.setState({ userHeartsAdded: this.state.userHearts });
+                    else throw new Error('Failed to register hearts');
+                })
+                .catch(err => {
+                    console.log('registerHearts: ' + err);
+                });
+        }
+
+        // register additional crosses
+        if (addCrosses > 0) {
+            this.props.firebase.registerCrosses(addCrosses)
+                .then(data => {
+                    if (data.success) this.setState({ userCrossesAdded: this.state.userCrosses });
+                    else throw new Error('Failed to register crosses');
+                })
+                .catch(err => {
+                    console.log('registerCrosses: ' + err);
+                });
+        }
+
+        // set timeout for next register 
+        this.setState({
+            currentTimeout: setTimeout(
+                this._registerHeartsAndCrosses, 
+                30000
+            )
         });
     }
 
@@ -152,7 +203,7 @@ class HomeBanner extends Component {
                                 fontSize: '16px'
                             }}
                         >
-                            {formatLargeNumber(this.state.hearts + this.state.userHearts)}
+                            {formatLargeNumber(this.props.hearts + this.state.userHearts)}
                         </div>
                     </div>
 
@@ -201,7 +252,7 @@ class HomeBanner extends Component {
                                 fontSize: '16px'
                             }}
                         >
-                            {formatLargeNumber(this.state.crosses + this.state.userCrosses)}
+                            {formatLargeNumber(this.props.crosses + this.state.userCrosses)}
                         </div>
                     </div>
                 </div>
@@ -210,4 +261,4 @@ class HomeBanner extends Component {
     }
 } 
 
-export default HomeBanner;
+export default withFirebase(HomeBanner);

@@ -34,6 +34,8 @@ class Firebase {
 
 
 
+
+
     /*** AUTH API ***/
 
     doSignIn = () => {
@@ -47,6 +49,8 @@ class Firebase {
     getUser = () => {
         return this.auth.currentUser;
     }
+
+
 
 
 
@@ -73,6 +77,32 @@ class Firebase {
             });
     }
 
+    registerHearts = (count) => {
+        return fetch(FUNCTIONS_URL + 'registerHearts', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Count': count
+            }
+        })
+            .then(response => {
+                return response.json();
+            });
+    }
+
+    registerCrosses = (count) => {
+        return fetch(FUNCTIONS_URL + 'registerCrosses', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Count': count
+            }
+        })
+            .then(response => {
+                return response.json();
+            });
+    }
+
     verifyUserProfilePosition = () => {
         const date = getPreviousDateString();
         const userId = this.getUser().uid;
@@ -83,6 +113,10 @@ class Firebase {
                 else return true;
             });
     }
+
+
+
+
 
     /*** AUCTION API ***/
 

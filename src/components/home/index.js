@@ -17,7 +17,6 @@ class HomePage extends Component {
         this.state = {
             playerOpen: false,
             displayProfile: false,
-            views: null,
             date: ''
         };
     }
@@ -39,8 +38,12 @@ class HomePage extends Component {
                     this.setState({
                         playerOpen: false,
                         displayProfile: true,
-                        views: profile.views,
+
+                        /* profile metadata */
                         date: profile.date,
+                        views: profile.views,
+                        hearts: profile.hearts,
+                        crosses: profile.crosses,
 
                         /* profile data */
                         profileTitle: profile.title,
@@ -60,7 +63,7 @@ class HomePage extends Component {
         // record profile view
         this.props.firebase.registerView()
             .then(data => {
-                if (data.success) throw new Error('Failed to register view');
+                if (!data.success) throw new Error('Failed to register view');
             })
             .catch(err => {
                 console.log('registerView: ' + err);
@@ -257,6 +260,8 @@ class HomePage extends Component {
                 {isBrowser && 
                     <HomeBanner
                         views={this.state.views}
+                        hearts={this.state.hearts}
+                        crosses={this.state.crosses}
                     />
                 }
 

@@ -91,6 +91,7 @@ export function currencyFormat(value) {
 
 // format large number values
 export function formatLargeNumber(value) {
+    if (isNaN(value)) return '--';
     if (value >= 1000000) return String(Math.round(value / 1000000)) + 'M';
     else if (value >= 1000) return String(Math.round(value / 1000)) + 'K';
     else return String(value);
