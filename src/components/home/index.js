@@ -4,9 +4,9 @@ import { isBrowser } from 'react-device-detect';
 import Loader from 'react-loader-spinner';
 
 import { withFirebase } from '../firebase';
-import { getFormattedDateString, formatViewsCount } from '../../utils';
 import MediaLink from './media';
 import HomePlayer from './player';
+import HomeBanner from './banner';
 
 import PlayIcon from '../../assets/play.png';
 import DividerIcon from '../../assets/divider.png';
@@ -44,7 +44,6 @@ class HomePage extends Component {
 
                         /* profile data */
                         profileTitle: profile.title,
-                        profileColor: profile.color,
                         profileImageLink: profile.imageLink,
                         profileVideoLink: profile.videoLink,
                         profileText: profile.text,
@@ -71,9 +70,8 @@ class HomePage extends Component {
     render() {
 
         // set loading feature
-        var centralFeature = undefined;
         if (!this.state.displayProfile) {
-            centralFeature = (
+            var centralFeature = (
                 <Loader
                     type='Oval'
                     color='grey'
@@ -96,11 +94,11 @@ class HomePage extends Component {
 
                         height: '90%',
                         width: '500px',
-                        paddingTop: '60px',
+                        paddingTop: '47px',
                         paddingBottom: '80px',
 
                         overflow: isBrowser ? 'hidden' : 'scroll',
-                        backgroundImage: 'linear-gradient(' + this.state.profileColor + ', white)',
+                        backgroundImage: 'linear-gradient(white, #dcdcdc)',
                         borderRadius: '60px',
                         boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
                     }}
@@ -124,15 +122,10 @@ class HomePage extends Component {
                                 height: 'auto',
                                 width: 'auto',
                                 maxHeight: '400px',
-                                maxWidth: '75%',
+                                maxWidth: '80%',
 
                                 borderRadius: '10px',
-                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.25)',
-
-                                userSelect: 'none',
-                                msUserSelect: 'none',
-                                KhtmlUserSelect: 'none',
-                                MozUserSelect: 'none'
+                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.25)'
                             }}
                         />
 
@@ -262,51 +255,9 @@ class HomePage extends Component {
 
                 {/* date/views banner */}
                 {isBrowser && 
-                    <div
-                        style={{
-                            position: 'absolute',
-                            display: 'flex',
-                            zIndex: 1,
-
-                            flexDirection: 'column',
-                            alignItems: 'center',
-
-                            top: '25px',
-                            left: '25px',
-                            paddingTop: '13px',
-                            paddingBottom: '16px',
-                            paddingLeft: '22px',
-                            paddingRight: '22px',
-
-                            color: '#36454F',
-                            cursor: 'default',
-                            borderRadius: '7px',
-                            backgroundColor: '#f8f9fa',
-                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                        }}
-                    >
-                        <div
-                            style={{
-                                fontWeight: 'bold',
-                                letterSpacing: '1.5px',
-                                fontSize: '25px'
-                            }}
-                        >
-                            {getFormattedDateString()}
-                        </div>
-
-                        <div
-                            style={{
-                                marginTop: '6px',
-                                fontSize: '15px',
-                                fontStyle: 'italic',
-                            }}
-                        >
-                            {(this.state.views != null) &&
-                                formatViewsCount(this.state.views) + ' Views Today'
-                            }
-                        </div>
-                    </div>
+                    <HomeBanner
+                        views={this.state.views}
+                    />
                 }
 
                 {/* page canvas */}

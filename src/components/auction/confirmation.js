@@ -23,7 +23,7 @@ class ConfirmationModal extends Component {
                         this.setState({
                             fetching: false,
                             success: 'Successfully placed bid.'
-                        }, () => { this.props.updateUserBid(this.props.bid); });
+                        }, () => { this.props.handleSuccess(); });
                     }
                     else {
                         if (data.message) {

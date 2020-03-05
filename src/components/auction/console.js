@@ -77,11 +77,34 @@ class AuctionConsole extends Component {
                     });
                 });
         });
+
+        // get current user auction position
+        this.setState({ fetching: true }, () => {
+            this.props.firebase.verifyUserAuctionPosition()
+                .then(position => {
+                    this.setState({
+                        fetching: false,
+                        lastUpdate: Date.now(),
+                        auctionUserBid: position
+                    });
+                })
+                .catch(err => {
+                    console.log('getCurrentAuction: ' + err);
+                    this.setState({
+                        fetching: false,
+                        lastUpdate: Date.now(),
+                        auctionUserBid: null
+                    });
+                });
+        });
     }
 
     _updateCurrentUserBid = (bid) => {
+        this.setState({ auctionUserBid: bid });
+    }
+
+    _handleConfirmationSuccess = () => {
         this.setState({ 
-            auctionUserBid: bid,
             userBidValue: '',
             submittedUserBid: null,
             validUserBid: false,
@@ -158,10 +181,6 @@ class AuctionConsole extends Component {
         }
     }
 
-    _handleBidRefresh = () => {
-        this._updateCurrentAuction();
-    }
-
     render() {
         if (this.state.fetching) {
             return (
@@ -188,7 +207,7 @@ class AuctionConsole extends Component {
                     <ConfirmationModal
                         bid={this.state.submittedUserBid}
                         back={this._closeConfirmationModal}
-                        updateUserBid={this._updateCurrentUserBid}
+                        handleSuccess={this._handleConfirmationSuccess}
                     />
                 }
 
@@ -262,16 +281,16 @@ class AuctionConsole extends Component {
                                 }}
                             >
                                 <div>
-                                    <b>
-                                        Top Bid{userHasTopBid ? ' (Yours)' : ''}:&nbsp;&nbsp;
-                                    </b>
+                                    <b>Top Bid</b>
+                                    {userHasTopBid ? ' (Yours)' : ''}
+                                    <b>:&nbsp;&nbsp;</b>
                                     {currencyFormat(this.state.auctionBid)}
                                 </div>
 
                                 <img
                                     src={RefreshIcon}
                                     alt='Refresh ICN'
-                                    onClick={this._handleBidRefresh}
+                                    onClick={this._updateCurrentAuction}
                                     style={{
                                         position: 'absolute',
                                         right: '10px',

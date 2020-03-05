@@ -114,12 +114,12 @@ class Firebase {
 
     verifyUserAuctionPosition = () => {
         const date = getDateString();
-        const userId = this.getUser();
+        const userId = this.getUser().uid;
         return this.db.collection('users').doc(userId)
             .collection('auctions').doc(date).get()
             .then(position => {
                 if (!position.exists) return null
-                return position.data()
+                return position.data().latestBid;
             });
     }
 }
