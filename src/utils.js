@@ -74,8 +74,8 @@ export function getFormattedDateStringFromDate(date) {
 }
 
 // format views count for large numbers
-export function formatViewsCount(views) {
-    if (views == null) return '--';
+export function formatLargeNumber(views) {
+    if (views === null || isNaN(views)) return '--';
     return views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -87,12 +87,4 @@ export function currencyFormat(value) {
         minimumFractionDigits: 2
     });
     return formatter.format(value);
-}
-
-// format large number values
-export function formatLargeNumber(value) {
-    if (isNaN(value)) return '--';
-    if (value >= 1000000) return String(Math.round(value / 1000000)) + 'M';
-    else if (value >= 1000) return String(Math.round(value / 1000)) + 'K';
-    else return String(value);
 }

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { withFirebase } from '../firebase';
 import { 
     getFormattedDateString, 
-    formatViewsCount,
     formatLargeNumber
 } from '../../utils';
 
@@ -143,7 +142,7 @@ class HomeBanner extends Component {
                         fontStyle: 'italic',
                     }}
                 >
-                    {formatViewsCount(this.props.views) + ' '} Views
+                    {formatLargeNumber(this.props.views) + ' '} Views
                 </div>
 
                 {/* heart/cross buttons */}
@@ -152,20 +151,21 @@ class HomeBanner extends Component {
                         marginTop: '35px',
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'space-around',
                         width: '100%'
                     }}
                 >
 
                     {/* heart button/count */}
                     <div
-                        onClick={this._handleHeartPress}
                         style={{
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            width: '50%'
                         }}
                     >
                         <div
+                            onClick={this._handleHeartPress}
                             style={{
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -198,7 +198,7 @@ class HomeBanner extends Component {
                         <div 
                             style={{ 
                                 marginTop: '7px',
-                                textAlign: 'center',
+                                // textAlign: 'center',
                                 fontStyle: 'italic',
                                 fontSize: '16px'
                             }}
@@ -209,13 +209,15 @@ class HomeBanner extends Component {
 
                     {/* cross button/count */}
                     <div
-                        onClick={this._handleCrossPress}
                         style={{
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            width: '50%'
                         }}
                     >
                         <div
+                            onClick={this._handleCrossPress}
                             style={{
                                 display: 'flex',
                                 justifyContent: 'center',
