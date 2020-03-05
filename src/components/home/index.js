@@ -17,7 +17,8 @@ class HomePage extends Component {
         this.state = {
             playerOpen: false,
             displayProfile: false,
-            date: ''
+            date: '',
+            set: false,
         };
     }
 
@@ -41,6 +42,7 @@ class HomePage extends Component {
 
                         /* profile metadata */
                         date: profile.date,
+                        set: profile.set,
                         views: profile.views,
                         hearts: profile.hearts,
                         crosses: profile.crosses,
@@ -84,6 +86,24 @@ class HomePage extends Component {
             );
         }
 
+        // set empty profile
+        else if (!this.state.set) {
+            centralFeature = (
+                <Button
+                    variant='outline-dark'
+                    disabled
+                    style={{
+                        cursor: 'default',
+                        fontSize: '15px',
+                        color: 'black',
+                        padding: '15px'
+                    }}
+                >
+                    Today's Profile Will Be Posted Soon
+                </Button>
+            );
+        }
+ 
         // set profile feature 
         else {
             centralFeature = (
