@@ -28,7 +28,7 @@ class HomeBanner extends Component {
         this.setState({
             currentTimeout: setTimeout(
                 this._registerHeartsAndCrosses, 
-                30000
+                10000
             )
         });
     }

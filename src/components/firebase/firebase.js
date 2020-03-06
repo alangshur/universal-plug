@@ -114,6 +114,23 @@ class Firebase {
             });
     }
 
+    setCurrentProfile = (profile) => {
+        return this.getUser().getIdToken()
+            .then(token => {
+                return fetch(FUNCTIONS_URL + 'setProfile', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                        'Profile': JSON.stringify(profile)
+                    }
+                })
+                    .then(response => {
+                        return response.json();
+                    });
+            });
+    }
+
 
 
 

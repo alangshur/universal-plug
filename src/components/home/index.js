@@ -10,6 +10,7 @@ import HomeBanner from './banner';
 
 import PlayIcon from '../../assets/play.png';
 import DividerIcon from '../../assets/divider.png';
+import TransparentImage from '../../assets/transparent.png';
 
 class HomePage extends Component {
     constructor(props) {
@@ -22,20 +23,17 @@ class HomePage extends Component {
         };
     }
 
-    _goToAuction = () => {
-        this.props.history.push('/auction');
-    }
-
-    _togglePlayer = () => {
-        this.setState({ playerOpen: !this.state.playerOpen });
-    }
-
     componentDidMount() {
 
         // get current profile
         this.props.firebase.getCurrentProfile()
             .then((profile) => {
                 if (profile) {
+                    if (profile.imageLink === '') var image = TransparentImage;
+                    else image = profile.imageLink;
+                    if (profile.videoLink === '') var video = null;
+                    else video = profile.videoLink;
+
                     this.setState({
                         playerOpen: false,
                         displayProfile: true,
@@ -49,8 +47,8 @@ class HomePage extends Component {
 
                         /* profile data */
                         profileTitle: profile.title,
-                        profileImageLink: profile.imageLink,
-                        profileVideoLink: profile.videoLink,
+                        profileImageLink: image,
+                        profileVideoLink: video,
                         profileText: profile.text,
                         profileLink1: profile.link1,
                         profileLink2: profile.link2,
@@ -70,6 +68,47 @@ class HomePage extends Component {
             .catch(err => {
                 console.log('registerView: ' + err);
             });
+    }
+
+    _goToAuction = () => {
+        this.props.history.push('/auction');
+        // this.props.firebase.setCurrentProfile({
+        //     title: 'Alex Langshur',
+        //     imageLink: 'https://i.imgur.com/IHAoMzT.png',
+        //     videoLink: 'https://streamable.com/bwkxc',
+        //     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        //     link1: { link: 'http://www.instagram.com', media: 'instagram', text: 'alangshur' },
+        //     link2: { link: 'http://www.youtube.com', media: 'youtube', text: 'alexlangshur' },
+        //     link3: { link: 'http://www.google.com', media: 'website', text: 'alexlangshur.com' }
+        // });
+    }
+
+    _togglePlayer = () => {
+        this.setState({ playerOpen: !this.state.playerOpen });
+    }
+
+    _handleImageError = () => {
+        this.setState({ profileImageLink: TransparentImage });
+    }
+
+    _getProfileColor = () => {
+        if (this.state.hearts === undefined || this.state.crosses === undefined)
+            return 'rgb(220, 220, 220)';
+        const hearts = this.state.hearts === 0 ? 1 : this.state.hearts;
+        const crosses = this.state.crosses === 0 ? 1 : this.state.crosses;
+
+        // get polarity direction
+        const degree = 100;
+        const ratioPolarity = hearts >= crosses;
+        const likeRatio = ratioPolarity ?
+            Math.min((hearts / crosses) / degree, 1.0) :
+            Math.min((crosses / hearts) / degree, 1.0);
+
+        // interpolate color
+        if (likeRatio < 0.1) return 'rgb(220, 220, 220)';  
+        if (ratioPolarity) var color = '(' + 40 + ', ' + 167  + ', ' + 69 + ', ' + likeRatio + ')';
+        else color = '(' + 220 + ', ' + 53  + ', ' + 69 + ', ' + likeRatio + ')';
+        return 'rgba' + color;
     }
 
     render() {
@@ -117,11 +156,11 @@ class HomePage extends Component {
 
                         height: '90%',
                         width: '500px',
-                        paddingTop: '47px',
-                        paddingBottom: '80px',
+                        paddingTop: '50px',
+                        paddingBottom: '50px',
 
                         overflow: isBrowser ? 'hidden' : 'scroll',
-                        backgroundImage: 'linear-gradient(white, #dcdcdc)',
+                        backgroundImage: 'linear-gradient(white, ' + this._getProfileColor() + ')',
                         borderRadius: '60px',
                         boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
                     }}
@@ -141,11 +180,12 @@ class HomePage extends Component {
                             src={this.state.profileImageLink}
                             alt='Profile IMG'
                             draggable={false}
+                            onError={this._handleImageError}
                             style={{
                                 height: 'auto',
                                 width: 'auto',
-                                maxHeight: '400px',
-                                maxWidth: '80%',
+                                maxHeight: '350px',
+                                maxWidth: '85%',
 
                                 borderRadius: '10px',
                                 boxShadow: '0 0 5px rgba(0, 0, 0, 0.25)'
@@ -153,17 +193,19 @@ class HomePage extends Component {
                         />
 
                         {/* profile play icon */}
-                        <img
-                            src={PlayIcon}
-                            alt='Play ICN'
-                            draggable={false}
-                            onClick={this._togglePlayer}
-                            style={{
-                                position: 'absolute',
-                                height: '125px',
-                                cursor: 'pointer'
-                            }}
-                        />
+                        {this.state.profileVideoLink && 
+                            <img
+                                src={PlayIcon}
+                                alt='Play ICN'
+                                draggable={false}
+                                onClick={this._togglePlayer}
+                                style={{
+                                    position: 'absolute',
+                                    height: '125px',
+                                    cursor: 'pointer'
+                                }}
+                            />
+                        }
                     </div>
 
                     {/* profile middle (divider icon) */}
